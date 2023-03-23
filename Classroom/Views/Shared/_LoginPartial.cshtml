@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Classroom.Data
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown no-arrow">
+    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("LastName")) == true)
+            {
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@HttpContextAccessor.HttpContext.Session.GetString("LastName").ToString()</span>
+            }
+            @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("Avatar")) == true)
+            {
+                <img class="img-profile rounded-circle" style="object-fit: cover;"
+            src="@HttpContextAccessor.HttpContext.Session.GetString("Avatar").ToString()">
+            }
+        </a>
+        <!-- Dropdown - User Information -->
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Thông tin cá nhân
+            </a>
+            <a class="dropdown-item" asp-controller="User" asp-action="Pay">
+                <i class="fa-solid fa-sack-dollar fa-sm fa-fw mr-2 text-gray-400"></i>
+                Nạp tiền
+            </a>
+            <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword">
+                <i class="fa-solid fa-shield-halved fa-sm fa-fw mr-2 text-gray-400"></i>
+                Bảo mật
+            </a>
+            <div class="dropdown-divider"></div>
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+            asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button style="width: 90%;" id="logout" type="submit" class="btn btn-primary btn-sm m-auto">Đăng
+                    xuất</button>
+            </form>
+        </div>
+    </li>
+
+}
+else
+{
+    <li class="nav-item dropdown no-arrow">
+    <a class="nav-link dropdown-toggle" asp-area="Identity" asp-page="/Account/Login">
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Đăng nhập</span>
+    </a>
+</li>
+}

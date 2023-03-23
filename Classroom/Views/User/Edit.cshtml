@@ -1,0 +1,105 @@
+﻿@model Classroom.Core.ViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Admin | Cập nhật người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .bg-gradient-primary {
+        background-color: #1cc88a;
+        background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%);
+        background-size: cover;
+    }
+</style>
+
+<h1 class="mt-4">Cập nhật người dùng</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
+    <li class="breadcrumb-item active">Cập nhật người dùng</li>
+</ol>
+
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Cập nhật người dùng</h6>
+    </div>
+
+    <div class="card-body">
+        @using (Html.BeginForm("OnPost", "User"))
+        {
+            @Html.HiddenFor(h => @Model.User.Id);
+            <div class="row g-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-sm-6">
+                    <label asp-for="@Model.User.FirstName" class="form-label"></label>
+                    <input asp-for="@Model.User.FirstName" class="form-control" autocomplete="username"
+                    aria-required="true" />
+                    <span asp-validation-for="@Model.User.FirstName" class="text-danger">
+                    </span>
+                </div>
+
+                <div class="col-sm-6">
+                    <label asp-for="@Model.User.LastName" class="form-label"></label>
+                    <input asp-for="@Model.User.LastName" class="form-control" autocomplete="username"
+                    aria-required="true" />
+                    <span asp-validation-for="@Model.User.LastName" class="text-danger">
+                    </span>
+                </div>
+
+                <div class="col-sm-6">
+                    <label class="form-label">Số điện thoại</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-phone"></i></span>
+                        <input asp-for="@Model.User.PhoneNumber" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@Model.User.PhoneNumber" class="text-danger">
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <label asp-for="@Model.User.Dob" class="form-label"></label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-cake-candles"></i></span>
+                        <input asp-for="@Model.User.Dob" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@Model.User.Dob" class="text-danger">
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label">Địa chỉ email</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                        <input asp-for="@Model.User.Email" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@Model.User.Email" class="text-danger">
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h4 class="mb-3">Cấp quyền</h4>
+
+            <div class="my-3">
+
+                @for (int i = 0; i < @Model.Roles.Count(); i++)
+                {
+                    <div class="form-check">
+                        @Html.CheckBoxFor(c => @Model.Roles[i].Selected)
+                        @Html.HiddenFor(h => @Model.Roles[i].Value)
+
+                        @Html.LabelFor(l => @Model.Roles[i].Selected, @Model.Roles[i].Text, new {@class="form-check-label"})
+                        @Html.HiddenFor(h => @Model.Roles[i].Text)
+                    </div>
+                }
+            </div>
+
+            <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+
+            <div class="form-group">
+                <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+</div>

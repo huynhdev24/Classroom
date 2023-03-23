@@ -1,0 +1,719 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+
+    <title>Trò chuyện - Classroom</title>
+
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon">
+                    <img style="height: 3rem;" src="/img/logo-white.svg" alt="logo-white.svg">
+                </div>
+                <div class="sidebar-brand-text mx-3">Daisy <sup>Study</sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            @if(HttpContextAccessor.HttpContext.Session.GetString("RoleName") == "Administrator"){
+                <div class="sidebar-heading">
+                    Quản trị website
+                </div>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="true" aria-controls="collapseThree">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Người dùng</span>
+                    </a>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý người dùng:</h6>
+                            <a class="collapse-item" asp-area="" asp-controller="User" asp-action="Index">Danh sách người
+                                dùng</a>
+                            <a class="collapse-item" asp-area="" asp-controller="User" asp-action="Create">Thêm người dùng
+                                mới</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdminClass"
+                    aria-expanded="true" aria-controls="collapseAdminClass">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Lớp học</span>
+                </a>
+                <div id="collapseAdminClass" class="collapse" aria-labelledby="headingAdminClass" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="" asp-controller="Class" asp-action="Index">Danh sách lớp
+                            học</a>
+                    </div>
+                </div>
+            </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContact"
+                        aria-expanded="true" aria-controls="collapseContact">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Phản hồi</span>
+                    </a>
+                    <div id="collapseContact" class="collapse" aria-labelledby="headingContact" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý phản hồi:</h6>
+                            <a class="collapse-item" asp-area="" asp-controller="Contact" asp-action="Index">Danh sách phản hồi</a>
+                        </div>
+                    </div>
+                </li>
+
+                <hr class="sidebar-divider">
+            }
+            
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Lớp học
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour"
+                    aria-expanded="true" aria-controls="collapseFour">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Lớp học</span>
+                </a>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="" asp-controller="Class" asp-action="MyClass">Danh sách lớp
+                            học</a>
+                        <a class="collapse-item" asp-area="" asp-controller="Class" asp-action="Create">Tạo lớp học
+                            mới</a>
+                        <a class="collapse-item" data-bs-toggle="modal" data-bs-target="#joinModal">Tham gia lớp học</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Join Modal -->
+            <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered animated--grow-in">
+                    <form asp-controller="Class" asp-action="JoinClassById" class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Tham gia lớp học</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input class="form-control" name="ClassID" placeholder="Nhập mã lớp..." autocomplete="off">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Tham gia</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive"
+                    aria-expanded="true" aria-controls="collapseFive">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>Bài tập</span>
+                </a>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="" asp-controller="Homework" asp-action="BaiTap">Danh sách bài
+                            tập</a>
+                        @* <a class="collapse-item" asp-area="" asp-controller="Homework" asp-action="Create">Thêm bài
+                            tập
+                            mới</a> *@
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSeven"
+                    aria-expanded="true" aria-controls="collapseSeven">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Lịch thi</span>
+                </a>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" asp-area="" asp-controller="ExamSchedule" asp-action="Index">Danh sách
+                            lịch thi</a>
+                        @* <a class="collapse-item" asp-area="" asp-controller="ExamSchedule" asp-action="Create">Kiểm
+                            tra
+                            mới</a> *@
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Giáo viên
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadClass"
+                    aria-expanded="true" aria-controls="collapseadClass">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Lớp học</span>
+                </a>
+                <div id="collapseadClass" class="collapse" aria-labelledby="headingadClass"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý lớp học:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Class" asp-action="MyAdminClass">Lớp học
+                            đang dạy</a>
+                    </div>
+                </div>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadminHomework"
+                    aria-expanded="true" aria-controls="collapseadminHomework">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>Bài tập</span>
+                </a>
+                <div id="collapseadminHomework" class="collapse" aria-labelledby="headingadminHomework"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý bài tập:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Homework" asp-action="Index">Danh sách bài
+                            tập</a>
+                    </div>
+                </div>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadminSubmission"
+                    aria-expanded="true" aria-controls="collapseadminSubmission">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Nộp bài</span>
+                </a>
+                <div id="collapseadminSubmission" class="collapse" aria-labelledby="headingadminSubmission"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý nộp bài:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Submission" asp-action="Index">Danh sách
+                            nộp bài</a>
+                    </div>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadminExamSchedule"
+                    aria-expanded="true" aria-controls="collapseadminExamSchedule">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Lịch thi</span>
+                </a>
+                <div id="collapseadminExamSchedule" class="collapse" aria-labelledby="headingadminExamSchedule"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý lịch thi:</h6>
+                        <a class="collapse-item" asp-area="" asp-action="AdminLichThi" asp-controller="ExamSchedule"
+                            asp-action="Index">Danh sách lịch thi</a>
+                    </div>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadminQuestion"
+                    aria-expanded="true" aria-controls="collapseadminQuestion">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span>Đề thi</span>
+                </a>
+                <div id="collapseadminQuestion" class="collapse" aria-labelledby="headingadminQuestion"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý đề thi:</h6>
+                        <a class="collapse-item" asp-area="" asp-controller="Question" asp-action="Index">Danh sách đề
+                            thi</a>
+                    </div>
+                </div>
+
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseadminCheck"
+                    aria-expanded="true" aria-controls="collapseadminCheck">
+                    <i class="fa-solid fa-file-pen"></i>
+                    <span>Kết quả thi</span>
+                </a>
+                <div id="collapseadminCheck" class="collapse" aria-labelledby="headingadminCheck"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Quản lý kết quả thi:</h6>
+                        <a class="collapse-item" asp-controller="ExamSchedule" asp-action="AdminKetQuaThi">Xem kết quả
+                            thi</a>
+
+                    </div>
+                </div>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Begin Page Content -->
+                <div class="container-fluid" style="padding: 0;">
+
+                    <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <title>SignalR Chat</title>
+                        <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+                        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+                        <link rel="icon" href="/img/daisylogo.png" type="image/x-icon">
+                    </head>
+
+                    <body>
+
+
+                        <div class="alert alert-warning alert-dismissible d-none" id="errorAlert" role="alert">
+                            <span data-bind="text:serverInfoMessage"></span>
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center align-items-center vh-100" data-bind="css: isLoading() ?
+        'd-flex' : 'd-none'">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Đang tải...</span>
+                            </div>
+                        </div>
+
+                        <div class="app">
+                            <div class="sidebar">
+                                <div class="header">
+
+                                    <h5>Cuộc trò chuyện</h5>
+                                    <a role="button" class="d-flex" id="create-room" data-bs-toggle="modal"
+                                        data-bs-target="#create-room-modal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-plus-circle">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <ul class="rooms list-unstyled" id="rooms-list" data-bind="foreach: chatRooms">
+                                    <li>
+                                        <a href="#"
+                                            data-bind="text: name, attr: { 'data-roomId': id }, click: $parent.joinRoom.bind($data), css: { active: $root.joinedRoom() == name()}"></a>
+                                    </li>
+                                </ul>
+                                <div class="profile">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <span class="avatar me-2 text-uppercase"
+                                            data-bind="visible: myAvatar() == null, text: myName()[0]"></span>
+                                        <img class="avatar me-2"
+                                            data-bind="visible: showAvatar(), attr: { src: showAvatar() ? myAvatar() : '' }" />
+                                        <a asp-area="Identity" asp-page="/Account/Manage/Index"
+                                            data-bind="text: myName"></a>
+                                    </div>
+                                    <div>
+                                        <a href="/" class="btn-sign-out">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-log-out">
+                                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                                <polyline points="16 17 21 12 16 7"></polyline>
+                                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="main-content" data-bind="visible: joinedRoom().length == 0">
+                                <span class="m-auto">Vui lòng chọn phòng để tham gia!</span>
+                            </div>
+                            <div class="main-content" data-bind="visible: joinedRoom().length > 0">
+                                <div class="header">
+                                    <h5 id="joinedRoom" data-bind="text: joinedRoom()">Sảnh đợi</h5>
+                                    <div class="room-actions">
+                                        <button type="button" class="btn btn-link text-secondary px-1"
+                                            data-bs-toggle="modal" data-bs-target="#rename-room-modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-edit-3">
+                                                <path d="M12 20h9"></path>
+                                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn btn-link text-secondary px-1"
+                                            data-bs-toggle="modal" data-bs-target="#remove-room-modal">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-x">
+                                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="messages-container position-relative">
+                                    <div class="no-messages-info" data-bind="if: chatMessages().length == 0">Bạn sẽ là
+                                        người bắt chuyện trước</div>
+                                    <ul class="list-unstyled" id="messages-list" data-bind="foreach: chatMessages">
+                                        <li>
+                                            <div class="message-item" data-bind="css: { ismine: isMine() === true }">
+                                                <span class="avatar avatar-lg mx-2 text-uppercase"
+                                                    data-bind="visible: avatar() == null, text: from()[0]"></span>
+                                                <img class="avatar avatar-lg mx-2"
+                                                    data-bind="visible: avatar() != null, attr: { src: avatar() != null ? avatar() : '' }" />
+                                                <div class="message-content">
+                                                    <div class="message-info d-flex flex-wrap align-items-center">
+                                                        <span class="author" data-bind="text: from"></span>
+                                                        <span class="timestamp"
+                                                            data-bind="text: timestampRelative, attr: { 'data-bs-title': timestampFull }"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"></span>
+                                                    </div>
+                                                    <div class="content" data-bind="html: content"></div>
+                                                </div>
+                                                <div class="actions d-none">
+                                                    <div class="dropdown dropstart">
+                                                        <a class="text-secondary" role="button"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                height="16" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-more-vertical">
+                                                                <circle cx="12" cy="12" r="1"></circle>
+                                                                <circle cx="12" cy="5" r="1"></circle>
+                                                                <circle cx="12" cy="19" r="1"></circle>
+                                                            </svg>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="#"
+                                                                    data-bind="attr: { 'data-messageId': id }"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#remove-message-modal">Thu hồi tin
+                                                                    nhắn</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="message-input-container">
+                                    <input id="message-input" type="text" value="" maxlength="500"
+                                        data-bind="value:message, valueUpdate: 'afterkeydown', event: { keypress: onEnter }"
+                                        placeholder="Bạn đang nghĩ gì?" />
+                                    <div class="actions d-flex align-items-center">
+                                        <form method="post" asp-action="Upload" asp-controller="Upload"
+                                            enctype="multipart/form-data" id="uploadForm">
+                                            <label style="margin-bottom: 0;" for="UploadedFile"
+                                                class="custom-file-upload">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-image">
+                                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                                </svg>
+                                            </label>
+                                            <input type="hidden" name="RoomId" data-bind="value: joinedRoomId()" />
+                                            <input type="hidden" name="UserName" value="@User.Identity.Name" />
+                                            <input type="file" id="UploadedFile" name="File"
+                                                data-bind="event: {change: uploadFiles}">
+                                        </form>
+                                        <a role="button" id="btn-show-emojis">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-smile">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                            </svg>
+                                        </a>
+                                        <a role="button" id="btn-send-message" data-bind="click: sendNewMessage">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="feather feather-send">
+                                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="emojis-container d-none" id="emojis-container">
+                                        <button data-value=":)">
+                                            <img src="~/images/emojis/emoji1.png" />
+                                        </button>
+                                        <button data-value=":P">
+                                            <img src="~/images/emojis/emoji2.png" />
+                                        </button>
+                                        <button data-value=":O">
+                                            <img src="~/images/emojis/emoji3.png" />
+                                        </button>
+                                        <button data-value=":-)">
+                                            <img src="~/images/emojis/emoji4.png" />
+                                        </button>
+                                        <button data-value="B|">
+                                            <img src="~/images/emojis/emoji5.png" />
+                                        </button>
+                                        <button data-value=":D">
+                                            <img src="~/images/emojis/emoji6.png" />
+                                        </button>
+                                        <button data-value="<3">
+                                            <img src="~/images/emojis/emoji7.png" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="users-container">
+                                <div class="header">
+                                    <h5>Đang hoạt động (<span data-bind="text: filteredChatUsers().length">0</span>)
+                                    </h5>
+                                </div>
+                                <ul class="list-unstyled flex-grow-1" id="users-list"
+                                    data-bind="foreach: filteredChatUsers">
+                                    <li data-bind="attr: { 'data-username': userName}">
+                                        <div class="user">
+                                            <span class="avatar me-2 text-uppercase"
+                                                data-bind="visible: avatar() == null, text: displayName()[0]"></span>
+                                            <img class="avatar me-2"
+                                                data-bind="visible: avatar() != null, attr: { src: avatar() != null ? avatar() : '' }" />
+                                            <div class="user-info">
+                                                <span class="name" data-bind="text: displayName"></span>
+                                                <span class="device" data-bind="text: device"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="position-relative search-container text-secondary">
+                                    <input type="text" class="" placeholder="Tìm kiếm"
+                                        data-bind="value: filter, valueUpdate: 'afterkeydown'" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="create-room-modal" tabindex="-1"
+                            aria-labelledby="createRoomModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="createRoomModalLabel">Tạo cuộc trò chuyện</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" hidden class="form-control mb-2" id="userName"
+                                            value="@User.Identity.Name">
+                                        <input type="text" class="form-control" id="roomName" maxlength="100"
+                                            placeholder="Nhập tên cuộc trò chuyện..." />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"
+                                            data-bind="click: createRoom">Tạo mới</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="rename-room-modal" tabindex="-1"
+                            aria-labelledby="renameRoomModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="renameRoomModalLabel">Chỉnh sửa tên cuộc trò chuyện
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" id="newRoomName" maxlength="100"
+                                            data-bind="value: $root.joinedRoom()" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"
+                                            data-bind="click: editRoom">Cập nhật</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="remove-room-modal" tabindex="-1"
+                            aria-labelledby="removeRoomModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="removeRoomModalLabel">Xoá cuộc trò chuyện</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="mb-0">Bạn có chắc chắn muốn xoá cuộc trò chuyện này?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                                            data-bind="click: deleteRoom">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="remove-message-modal" tabindex="-1"
+                            aria-labelledby="removeMessageModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="removeMessageModalLabel">Delete Message</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="mb-0">Bạn có muốn xoá tin nhắn này?</p>
+                                        <input type="hidden" class="form-control" id="itemToDelete" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                                            data-bind="click: deleteMessage">Xoá</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                        <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+                        <script src="~/lib/knockout/knockout-latest.min.js"></script>
+                        <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+                        <script src="~/js/site.js" asp-append-version="true"></script>
+                        <script src="~/js/chat.js" asp-append-version="true"></script>
+                    </body>
+
+
+
+
+
+
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+</body>
+
+</html>

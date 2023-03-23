@@ -1,0 +1,69 @@
+using System.Security.Cryptography.X509Certificates;
+using Classroom.Utilities.Exceptions;
+using Classroom.Models.Common;
+using Microsoft.EntityFrameworkCore;
+using Classroom.Application.Common;
+using System.Net.Http.Headers;
+using Classroom.Data;
+using AutoMapper;
+using Classroom.Models.Catalog.Contact;
+
+namespace Classroom.Application.Catalog.Contacts;
+
+public class ContactService : IContactService
+{
+    private readonly ApplicationDbContext _context;
+    private readonly IMapper _mapper;
+    private const string USER_CONTENT_FOLDER_NAME = "user-content";
+
+    public ContactService(ApplicationDbContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
+
+    public async Task<bool> Create(Contact request)
+    {
+        request.DateTimeCreated = DateTime.Now;
+        _context.Contacts.Add(request);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> Delete(int ContactID)
+    {
+        var contact = await _context.Contacts.FindAsync(ContactID);
+        if (contact == null) return false;
+        _context.Contacts.Remove(contact);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<PagedResult<Contact>> GetAllPaging(GetAllPagingRequest request)
+    {
+        //1. Select join
+        var query = from c in _context.Contacts select c;
+
+        //3. Paging
+        int totalRow = await query.CountAsync();
+        var data = await query.OrderByDescending(x => x.DateTimeCreated).Skip((request.PageIndex - 1) * request.PageSize)
+            .Take(request.PageSize)
+            .ToListAsync();
+        //4. Select and projection
+        var pagedResult = new PagedResult<Contact>()
+        {
+            TotalRecords = totalRow,
+            PageSize = request.PageSize,
+            PageIndex = request.PageIndex,
+            Items = data
+        };
+        return pagedResult;
+    }
+
+    public async Task<Contact> GetById(int ContactID)
+    {
+        var Contact = await _context.Contacts.FindAsync(ContactID);
+        if (Contact == null) return null;
+        return Contact;
+    }
+}

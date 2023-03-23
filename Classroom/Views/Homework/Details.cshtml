@@ -1,0 +1,470 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model Classroom.Models.Catalog.Homeworks.HomeworkViewModel;
+@{
+    ViewData["Title"] = @Html.DisplayFor(model => model.ClassName);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/super-build/ckeditor.js"></script>
+
+<script>
+    class MyUploadAdapter {
+        constructor(loader) {
+            // The file loader instance to use during the upload.
+            this.loader = loader;
+        }
+
+        // Starts the upload process.
+        upload() {
+            return this.loader.file
+                .then(file => new Promise((resolve, reject) => {
+                    this._initRequest();
+                    this._initListeners(resolve, reject, file);
+                    this._sendRequest(file);
+                }));
+        }
+
+        // Aborts the upload process.
+        abort() {
+            if (this.xhr) {
+                this.xhr.abort();
+            }
+        }
+
+        // Initializes the XMLHttpRequest object using the URL passed to the constructor.
+        _initRequest() {
+            const xhr = this.xhr = new XMLHttpRequest();
+
+            // Note that your request may look different. It is up to you and your editor
+            // integration to choose the right communication channel. This example uses
+            // a POST request with JSON as a data structure but your configuration
+            // could be different.
+            xhr.open('POST', '@Url.Action("UploadImage", "Class")', true);
+            xhr.responseType = 'json';
+        }
+
+        // Initializes XMLHttpRequest listeners.
+        _initListeners(resolve, reject, file) {
+            const xhr = this.xhr;
+            const loader = this.loader;
+            const genericErrorText = `Couldn't upload file: ${file.name}.`;
+
+            xhr.addEventListener('error', () => reject(genericErrorText));
+            xhr.addEventListener('abort', () => reject());
+            xhr.addEventListener('load', () => {
+                const response = xhr.response;
+
+                // This example assumes the XHR server's "response" object will come with
+                // an "error" which has its own "message" that can be passed to reject()
+                // in the upload promise.
+                //
+                // Your integration may handle upload errors in a different way so make sure
+                // it is done properly. The reject() function must be called when the upload fails.
+                if (!response || response.error) {
+                    return reject(response && response.error ? response.error.message : genericErrorText);
+                }
+
+                // If the upload is successful, resolve the upload promise with an object containing
+                // at least the "default" URL, pointing to the image on the server.
+                // This URL will be used to display the image in the content. Learn more in the
+                // UploadAdapter#upload documentation.
+                resolve({
+                    default: response.url
+                });
+            });
+
+            // Upload progress when it is supported. The file loader has the #uploadTotal and #uploaded
+            // properties which are used e.g. to display the upload progress bar in the editor
+            // user interface.
+            if (xhr.upload) {
+                xhr.upload.addEventListener('progress', evt => {
+                    if (evt.lengthComputable) {
+                        loader.uploadTotal = evt.total;
+                        loader.uploaded = evt.loaded;
+                    }
+                });
+            }
+        }
+
+        // Prepares the data and sends the request.
+        _sendRequest(file) {
+            // Prepare the form data.
+            const data = new FormData();
+
+            data.append('upload', file);
+
+            // Important note: This is the right place to implement security mechanisms
+            // like authentication and CSRF protection. For instance, you can use
+            // XMLHttpRequest.setRequestHeader() to set the request headers containing
+            // the CSRF token generated earlier by your application.
+
+            // Send the request.
+            this.xhr.send(data);
+        }
+    }
+
+    function MyCustomUploadAdapterPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            // Configure the URL to the upload script in your back-end here!
+            return new MyUploadAdapter(loader);
+        };
+    }
+    // ...
+
+    CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        toolbar: {
+            items: [
+                'exportPDF', 'exportWord', '|',
+                'findAndReplace', 'selectAll', '|',
+                'heading', '|',
+                'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo',
+                
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'alignment', '|',
+                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+                'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                '-',
+                'textPartLanguage', '|',
+                'sourceEditing'
+            ],
+            shouldNotGroupWhenFull: true
+        },
+        // Changing the language of the interface requires loading the language file using the <script> tag.
+        // language: 'es',
+        list: {
+            properties: {
+                styles: true,
+                startIndex: true,
+                reversed: true
+            }
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+        heading: {
+            options: [
+                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+            ]
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+        placeholder: 'Nhập nội dung...',
+        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+        fontFamily: {
+            options: [
+                'default',
+                'Arial, Helvetica, sans-serif',
+                'Courier New, Courier, monospace',
+                'Georgia, serif',
+                'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                'Tahoma, Geneva, sans-serif',
+                'Times New Roman, Times, serif',
+                'Trebuchet MS, Helvetica, sans-serif',
+                'Verdana, Geneva, sans-serif'
+            ],
+            supportAllValues: true
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+        fontSize: {
+            options: [10, 12, 14, 'default', 18, 20, 22],
+            supportAllValues: true
+        },
+        // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+        // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+        htmlSupport: {
+            allow: [
+                {
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }
+            ]
+        },
+        // Be careful with enabling previews
+        // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+        htmlEmbed: {
+            showPreviews: true
+        },
+        // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+        mention: {
+            feeds: [
+                {
+                    marker: '@@',
+                    feed: [
+                        '@@apple', '@@bears', '@@brownie', '@@cake', '@@cake', '@@candy', '@@canes', '@@chocolate', '@@cookie', '@@cotton', '@@cream',
+                        '@@cupcake', '@@danish', '@@donut', '@@dragée', '@@fruitcake', '@@gingerbread', '@@gummi', '@@ice', '@@jelly-o',
+                        '@@liquorice', '@@macaroon', '@@marzipan', '@@oat', '@@pie', '@@plum', '@@pudding', '@@sesame', '@@snaps', '@@soufflé',
+                        '@@sugar', '@@sweet', '@@topping', '@@wafer'
+                    ],
+                    minimumCharacters: 1
+                }
+            ]
+        },
+        // The "super-build" contains more premium features that require additional configuration, disable them below.
+        // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+        removePlugins: [
+            // These two are commercial, but you can try them out without registering to a trial.
+            // 'ExportPdf',
+            // 'ExportWord',
+            'CKBox',
+            'CKFinder',
+            'EasyImage',
+            // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+            // Storing images as Base64 is usually a very bad idea.
+            // Replace it on production website with other solutions:
+            // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+            // 'Base64UploadAdapter',
+            'RealTimeCollaborativeComments',
+            'RealTimeCollaborativeTrackChanges',
+            'RealTimeCollaborativeRevisionHistory',
+            'PresenceList',
+            'Comments',
+            'TrackChanges',
+            'TrackChangesData',
+            'RevisionHistory',
+            'Pagination',
+            'WProofreader',
+            // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+            // from a local file system (file://) - load this site via HTTP server if you enable MathType
+            'MathType'
+        ]
+    }, {
+        extraPlugins: [MyCustomUploadAdapterPlugin],
+
+        // ...
+    })
+        .catch(error => {
+            console.log(error);
+        });
+</script>
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+}
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Class" asp-action="Details" asp-route-id="@Model.ID">@Model.ClassName</a></li>
+    <li class="breadcrumb-item">Bài tập</li>
+</ol>
+
+<div class="col-sm-12 col-md-12 my-3">
+    <div class="row">
+        @if (ViewBag.SuccessMsg != null)
+        {
+            if(Convert.ToString(ViewBag.SuccessMsg).Contains("thành công") == true){
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            else{
+                <div id="msgAlert" class="alert alert-danger" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            
+        }
+    </div>
+</div>
+@{
+    var returnUrl = Context.Request.Path + "?id=" + @Model.HomeworkID;
+}
+
+
+<div class="row">
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">@Model.HomeworkName</h6>
+            
+            @if(Model.TeacherID == HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+                <form asp-action="SendMail">
+                <input type="text" name="ClassID" value="@Model.ClassID" hidden>
+                <input type="text" name="HomeworkID" value="@Model.HomeworkID" hidden>
+                <button type="submit" class="btn btn-primary">Gửi email thông báo</button>
+            </form>
+                <div class="dropdown no-arrow">
+                    
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Tuỳ chọn:</div>
+                        <a class="dropdown-item text-danger" href="@Url.Action("Delete", "Homework", new{id = @Model.HomeworkID, returnUrl = returnUrl})">Xoá bài tập</a>
+                        <a class="dropdown-item" href="@Url.Action("Edit", "Homework", new{id = @Model.HomeworkID})">Chỉnh sửa bài tập</a>
+                    </div>
+                </div>
+            }
+            
+        </div>
+        <div class="card-body">
+            <h6 class="text-info">Lớp học</h6>
+            @Model.ClassName
+            <br/><br/>
+            <h6 class="text-info">Ngày tạo</h6>
+            @Model.DateTimeCreated.ToString("HH:mm - dddd dd/MM/yyyy")
+            <br/><br/>
+            <h6 class="text-info">Ngày nộp</h6> 
+            @Model.SubmissionDateTime.ToString("HH:mm - dddd dd/MM/yyyy")
+            <br/><br>
+            <h6 class="text-info">Hạn nộp</h6>
+            @Model.Deadline.ToString("HH:mm - dddd dd/MM/yyyy")
+            @if(Convert.ToDateTime(Model.Deadline) < DateTime.Now){<p class="text-danger">Quá hạn nộp bài</p>}else{<p class="text-success">Trong thời hạn nộp bài</p>}
+            <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+            <h6 class="text-info">Mô tả</h6>
+            @Html.Raw(Model.Description)
+            <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+            <div class="card-group mt-2">
+            @foreach (var item in Model.HomeworkImages)
+            {
+                <div class="card" style="margin: 0.25rem; border: none;">
+                    @if (Convert.ToString(item.ImagePath).Contains(".png") || Convert.ToString(item.ImagePath).Contains(".jpeg") || Convert.ToString(item.ImagePath).Contains(".svg"))
+                    {
+                        <a target="_blank" href="@item.ImagePath">
+                            <img class="img-thumbnail" src="@item.ImagePath" alt="@item.ImagePath" />
+                        </a>
+                    }
+                    else if (Convert.ToString(item.ImagePath).Contains(".pdf"))
+                    {
+                        <a target="_blank" href="@item.ImagePath">
+                            <iframe class="img-thumbnail" src="@item.ImagePath" alt="@item.ImagePath"></iframe>
+                        </a>
+                    }
+                    else{
+                        <a target="_blank" href="@item.ImagePath">
+                            <img style="max-width: 11rem; border: none;" class="img-thumbnail" src="/img/file.svg" alt="@item.ImagePath">
+                        </a>
+                    }
+                </div>
+            }
+            </div>
+            
+        </div>
+    </div>
+
+    @if(Model.TeacherID != HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Làm bài</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form asp-action="Create" asp-controller="Submission" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input name="HomeworkID" value="@Model.HomeworkID" hidden class="form-control" />
+                        <input name="StudentID" value="@User.Identity.Name" hidden class="form-control" />
+                        <input name="ReturnUrl" value="@returnUrl" hidden class="form-control" />
+                    <div class="form-group">
+                        <label name="Description" class="control-label">Bài làm</label>
+                        <textarea id="editor" name="Description" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label name="ThumbnailImages" class="control-label">Thêm tệp</label>
+                        <input name="ThumbnailImages" type="file" multiple class="form-control" />
+                    </div>
+                    @{
+                        var checkSubmission = false;
+                    }
+                    @foreach (var item in Model.Submissions)
+                    {
+                        
+                        if(item.StudentID == HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+                            checkSubmission = true;
+                        }
+                    }
+
+                    @if(checkSubmission == true){
+                        <div class="form-group">
+                            @foreach (var item in Model.Submissions)
+                            {
+                                if(item.StudentID == HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+                                    <a type="submit" href="@Url.Action("Edit","Submission", new{id = item.SubmissionID})" class="btn btn-success">Đã nộp bài, nhấn để chỉnh sửa</a>
+                                }
+                            }
+                        </div>
+                    }
+                    else{
+                        <div class="form-group">
+                            @if(Convert.ToDateTime(Model.Deadline) > DateTime.Now){
+                                <input type="submit" value="Nộp bài" class="btn btn-primary" />
+                            }
+                            else{
+                                <input type="submit" value="Nộp bài trễ" class="btn btn-danger" />
+                            }
+                        </div>
+                    }
+                    
+                </form>
+            </div>
+        </div>
+    }
+    
+    </div>
+    <!-- Area Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Học sinh đã nộp (@Model.Submissions.Count)</h6>
+                <div class="dropdown no-arrow">
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                @foreach (var item in Model.Submissions)
+                {
+                    @if (string.IsNullOrEmpty(Convert.ToString(item.Student.Avatar)))
+                    {
+                        <div class="mb-3">
+                            @if(Model.TeacherID == HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+                                    <a asp-controller="Submission" asp-action="Details" asp-route-id="@item.SubmissionID">xem</a>
+                                }
+                            <img style="width: 2rem; height: 2rem; object-fit: cover;" class="img-profile rounded-circle"
+                        src="/img/image_null.png">
+                            <span class="mr-2 d-lg-inline text-gray-600 small">@item.Student.FirstName
+                                @item.Student.LastName</span>
+                                <span class="mr-2 d-lg-inline text-gray-600 small">lúc @item.SubmissionDateTime.ToString("HH:mm - dd/MM/yyyy")</span>
+                                <span class="mr-2 d-lg-inline text-info small">Cập nhật lúc @item.DateTimeUpdated.ToString("HH:mm - dd/MM/yyyy")</span>
+                                @if(Convert.ToDateTime(Model.Deadline) < Convert.ToDateTime(item.DateTimeUpdated)){
+                                    <span class="mr-2 d-lg-inline text-danger small">Cập nhật trễ</span>
+                                }
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(Convert.ToString(item.Student.Avatar)))
+                    {
+                        <div class="mb-3">
+                            @if(Model.TeacherID == HttpContextAccessor.HttpContext.Session.GetString("UserId").ToString()){
+                                    <a asp-controller="Submission" asp-action="Details" asp-route-id="@item.SubmissionID">xem</a>
+                                }
+                            <img style="width: 2rem; height: 2rem; object-fit: cover;" class="img-profile rounded-circle"
+                        src="@item.Student.Avatar" />
+                            <span class="mr-2 text-gray-600 small">@item.Student.FirstName
+                                @item.Student.LastName</span>
+                            <span class="mr-2 d-lg-inline text-gray-600 small">lúc @item.SubmissionDateTime.ToString("HH:mm - dd/MM/yyyy")</span>
+                            <span class="mr-2 text-info small">Cập nhật lúc @item.DateTimeUpdated.ToString("HH:mm - dd/MM/yyyy")</span>
+                            @if(Convert.ToDateTime(Model.Deadline) < Convert.ToDateTime(item.DateTimeUpdated)){
+                                    <span class="mr-2 d-lg-inline text-danger small">Cập nhật trễ</span>
+                                }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

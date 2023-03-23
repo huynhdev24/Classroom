@@ -1,0 +1,99 @@
+﻿@using Classroom.Models.Common;
+@{
+    ViewData["Title"] = "Admin | Phản hồi";
+}
+@model PagedResult<Classroom.Data.Contact>
+
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+}
+
+<style>
+    .bg-gradient-primary {
+        background-color: #1cc88a;
+        background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%);
+        background-size: cover;
+    }
+</style>
+
+<h1 class="mt-4">Danh sách phản hồi</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Contact" asp-action="Index">Phản hồi</a></li>
+    <li class="breadcrumb-item active">Danh sách phản hồi</li>
+</ol>
+
+<!-- DataTales -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách phản hồi</h6>
+    </div>
+
+    <div class="card-body" style="padding-top: 0;">
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên người dùng</th>
+                        <th>Địa chỉ email</th>
+                        <th>Số điện thoại</th>
+                        <th>Thời gian</th>
+                        <th>Tuỳ chọn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items != null)
+                    {
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CustomerName)
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td>
+                                        @item.DateTimeCreated.ToString("HH:mm - dddd dd/MM/yyy")
+                                </td>
+                                <td>
+                                    <a style="text-decoration: none;"
+                                href="@Url.Action("Details", "Contact", new { id = item.ContactID })">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+                                    <a data-bs-toggle="modal" data-bs-target="#delete_@item.ContactID" href=""><i
+                                    class="fa-solid fa-trash"></i></a>
+                                    <!-- Modal -->
+                            <div class="modal fade" id="delete_@item.ContactID" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered animated--grow-in">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá phản hồi
+                                                        này</h1>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Đóng</button>
+                                                    <a type="button" asp-controller="Contact" asp-action="Delete"
+                                                asp-route-id="@item.ContactID" class="btn btn-danger">Xác nhận</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>

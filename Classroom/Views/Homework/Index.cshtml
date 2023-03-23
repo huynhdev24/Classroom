@@ -1,0 +1,153 @@
+﻿@using Classroom.Models.Common;
+@model PagedResult<Classroom.Models.Catalog.Homeworks.HomeworkViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý bài tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+}
+<h1 class="mt-4">Quản lý bài tập</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Homework">Bài tập</a></li>
+    <li class="breadcrumb-item active">Danh sách bài tập</li>
+</ol>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách bài tập</h6>
+    </div>
+    <div class="card-header">
+        <div style="padding: 0;" class="col-md-6 col-xs-12">
+            <a class="btn btn-success" asp-action="Create" asp-controller="Homework">Tạo mới</a>
+        </div>
+    </div>
+
+    <div class="card-body" style="padding-top: 0;">
+        <div class="table-responsive">
+            <form asp-action="Index" method="get">
+                <div class="col-sm-12 col-md-12 my-3">
+                    <div class="row">
+                        @if (ViewBag.SuccessMsg != null)
+                        {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                        }
+                    </div>
+                    <div class="dataTables_filter">
+                        <div class="input-group">
+                            <input value="@ViewBag.Keyword" name="keyword" autocomplete="off" type="search"
+                                class="form-control bg-light border-0 small" placeholder="Tìm kiếm..."
+                                aria-controls="dataTable">
+
+                            <select class="form-control bg-light border-0 small" name="ClassID"
+                                aria-label="Chọn lớp học">
+                                <option>Tất cả lớp học</option>
+                                @foreach (var item in ViewBag.listCl)
+                                {
+                                    if (ViewBag.ClassID == item.ID)
+                                    {
+                                        <option selected value="@item.ID">@item.ClassName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.ClassName</option>
+                                    }
+
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <a asp-controller="Homework" class="btn btn-secondary" type="submit">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên lớp học
+                        </th>
+                        <th>
+                            Tên bài tập
+                        </th>
+                        <th>
+                            Hạn nộp bài
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items != null)
+                    {
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClassName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HomeworkName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Deadline)
+                                </td>
+                                <td>
+                                    <a style="text-decoration: none;"
+                                href="@Url.Action("Details", "Homework", new { id = item.HomeworkID })">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+                                    <a style="text-decoration: none;"
+                                href="@Url.Action("Edit", "Homework", new { id = item.HomeworkID })">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#_@item.HomeworkID"
+                                style="text-decoration: none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <div class="modal fade" id="_@item.HomeworkID" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá bài tập!</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tất cả thông tin của bài tập này cũng như danh sách nộp bài của học sinh đều bị xoá,
+                                            bạn nên tải xuống bảng điểm trước khi thực hiện.
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <a href="@Url.Action("Delete", "Homework", new { id = item.HomeworkID, returnUrl = "giao-vien/bai-tap"})" type="button" class="btn btn-danger">Xoá</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Component.InvokeAsync("Pager", Model)
+    </div>
+</div>

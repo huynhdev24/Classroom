@@ -1,0 +1,148 @@
+﻿@using Classroom.Models.Common;
+@model PagedResult<Classroom.Models.Catalog.ExamSchedules.ExamSchedulesViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý lịch thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+}
+<h1 class="mt-4">Quản lý lịch thi</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-action="AdminLichThi" asp-controller="ExamSchedule">Lịch thi</a></li>
+    <li class="breadcrumb-item active">Danh sách lịch thi</li>
+</ol>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách lịch thi</h6>
+    </div>
+
+    <div class="card-body" style="padding-top: 0;">
+        <div class="table-responsive">
+            <form asp-action="AdminLichThi" method="get">
+                <div class="col-sm-12 col-md-12 my-3">
+                    <div class="row">
+                        @if (ViewBag.SuccessMsg != null)
+                        {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                        }
+                    </div>
+                    <div class="dataTables_filter">
+                        <div class="input-group">
+                            <input value="@ViewBag.Keyword" name="keyword" type="search"
+                                class="form-control bg-light border-0 small" autocomplete="off"
+                                placeholder="Tìm kiếm..." aria-controls="dataTable">
+                            <select class="form-control bg-light border-0 small" name="ClassID"
+                                aria-label="Chọn lớp học">
+                                <option>Tất cả lớp học</option>
+                                @foreach (var item in ViewBag.listCl)
+                                {
+                                    if (ViewBag.ClassID == item.ID)
+                                    {
+                                        <option selected value="@item.ID">@item.ClassName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.ID">@item.ClassName</option>
+                                    }
+
+                                }
+                            </select>
+                            <div class="input-group-append">
+                                <a asp-controller="ExamSchedule" class="btn btn-secondary" type="submit">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên lớp học
+                        </th>
+                        <th>
+                            Tên kỳ thi
+                        </th>
+                        <th>
+                            Ngày thi
+                        </th>
+                        <th>
+                            Hạn làm bài
+                        </th>
+                        <th>
+                            Thời gian làm bài
+                        </th>
+                        <th class="text-nowrap">
+                            Trạng thái
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items != null)
+                    {
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClassName)
+                                </td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.ExamScheduleName)
+                                </td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.ExamDateTime)
+                                </td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.Deadline)
+                                </td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.ExamTime) phút
+                                </td>
+                                <td class="text-nowrap">
+                                    @if(Convert.ToDateTime(item.Deadline) < DateTime.Now){
+                                        <p class="text-danger">Ngoài thời gian thi</p>
+                                    }
+                                    else{
+                                        if(Convert.ToDateTime(item.ExamDateTime) > DateTime.Now){
+                                            <p class="text-success">Chưa đến thời gian thi</p>
+                                        }
+                                        else{
+                                            <p class="text-warning">Đang trong thời gian thi</p>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a style="text-decoration: none;"
+                                href="@Url.Action("OverView", "ExamSchedule", new { id = item.ExamScheduleID })">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Component.InvokeAsync("Pager", Model)
+    </div>
+</div>

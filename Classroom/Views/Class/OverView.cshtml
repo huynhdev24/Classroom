@@ -1,0 +1,248 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model Classroom.Models.Catalog.Classes.ClassViewModel;
+@{
+    ViewData["Title"] = @Html.DisplayFor(model => model.ClassName);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        watchSlidesProgress: true,
+        slidesPerView: 3,
+    });
+</script>
+}
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item active">@Html.DisplayFor(model => model.ClassName)</li>
+</ol>
+
+<div class="col-sm-12 col-md-12 my-3">
+    <div class="row">
+        @if (ViewBag.SuccessMsg != null)
+        {
+            if(Convert.ToString(ViewBag.SuccessMsg).Contains("thành công")){
+                <div id="msgAlert" class="alert alert-success" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+            else{
+                <div id="msgAlert" class="alert alert-danger" role="alert">
+                    @ViewBag.SuccessMsg
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Thông tin lớp học</h6>
+    </div>
+    <div class="card-header">
+        <div style="padding: 0;" class="col-md-6 col-xs-12">
+            @if (Model.TeacherUserName == User.Identity.Name || HttpContextAccessor.HttpContext.Session.GetString("RoleName")=="Administrator")
+            {
+                <a href="@Url.Action("Details", "Class", new {id = Model.ID })" class="btn btn-success">Truy
+                    cập</a>
+            }
+            else
+            {
+                <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Nhấn để tham gia</a>
+            }
+        </div>
+
+        <!-- Tham gia lớp học -->
+        <div class="modal animated--grow-in" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận tham gia lớp học</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="height: 22.5rem;" class="card-body">
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-solid fa-house me-2"></i>@Html.DisplayNameFor(model => model.ClassID):
+                                @Html.DisplayFor(model => model.ClassID)
+                            </div>
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-solid fa-bookmark me-2"></i>@Html.DisplayNameFor(model => model.Topic):
+                                @Html.DisplayFor(model => model.Topic)
+                            </div>
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>@Html.DisplayNameFor(model =>
+                                model.ClassRoom):
+                                @Html.DisplayFor(model => model.ClassRoom)
+                            </div>
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-regular fa-calendar-plus me-2"></i>@Html.DisplayNameFor(model =>
+                                model.DateCreated):
+                                @Html.DisplayFor(model => model.DateCreated)
+                            </div>
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-solid fa-layer-group me-2"></i>@Html.DisplayNameFor(model =>
+                                model.Status):
+                                @Html.DisplayFor(model => model.Status)
+                            </div>
+                            <div class="font-weight-bold mb-1">
+                                <i class="fa-solid fa-layer-group me-2"></i>@Html.DisplayNameFor(model =>
+                                model.isPublic):
+                                @Html.DisplayFor(model => model.isPublic)
+                            </div>
+                            <div class="font-weight-bold text-primary mb-1">
+                                <i class="fa-solid fa-eye me-2"></i>@Html.DisplayNameFor(model => model.ViewCount):
+                                @Html.DisplayFor(model => model.ViewCount)
+                            </div>
+                            <div class="font-weight-bold text-danger mb-1">
+                                <i class="fa-solid fa-sack-dollar me-2"></i>@Html.DisplayNameFor(model =>
+                                model.Tuition):
+                                @Html.DisplayFor(model => model.Tuition)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                        <form asp-action="JoinClass">
+                            <input asp-for="ID" type="hidden" />
+                            <input type="submit" value="Tiếp tục" class="btn btn-success" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding-bottom: ;" class="card-body">
+        <div class="row">
+            <img class="mb-3" style="height: 20rem; width: 100%; object-fit: cover;" src="@Model.Image"
+                alt="@Model.Image">
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            <i class="fa-solid fa-chalkboard-user me-2"></i>
+                            @Html.DisplayFor(model => model.Teacher)
+                        </h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div style="height: 22.5rem;" class="card-body">
+                        @if (string.IsNullOrEmpty(Convert.ToString(Model.TeacherImage)))
+                        {
+                            <img style="width: 100%; height: 100%; object-fit: cover;" class="img-card"
+                            src="/img/image_null.png" alt="/img/image_null.png" />
+                        }
+                        else
+                        {
+                            <img style="width: 100%; height: 100%; object-fit: cover;" class="img-card img-avatar"
+                            src="@(Model.TeacherImage)" alt="@Model.TeacherImage" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Lớp học</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div style="height: 22.5rem;" class="card-body">
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-solid fa-house me-2"></i>@Html.DisplayNameFor(model => model.ClassID):
+                            @Html.DisplayFor(model => model.ClassID)
+                        </div>
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-solid fa-bookmark me-2"></i>@Html.DisplayNameFor(model => model.Topic):
+                            @Html.DisplayFor(model => model.Topic)
+                        </div>
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-solid fa-right-from-bracket me-2"></i>@Html.DisplayNameFor(model =>
+                            model.ClassRoom):
+                            @Html.DisplayFor(model => model.ClassRoom)
+                        </div>
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-regular fa-calendar-plus me-2"></i>@Html.DisplayNameFor(model =>
+                            model.DateCreated):
+                            @Html.DisplayFor(model => model.DateCreated)
+                        </div>
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-solid fa-layer-group me-2"></i>@Html.DisplayNameFor(model => model.Status):
+                            @Html.DisplayFor(model => model.Status)
+                        </div>
+                        <div class="font-weight-bold mb-1">
+                            <i class="fa-solid fa-layer-group me-2"></i>@Html.DisplayNameFor(model =>
+                            model.isPublic):
+                            @Html.DisplayFor(model => model.isPublic)
+                        </div>
+                        <div class="font-weight-bold text-primary mb-1">
+                            <i class="fa-solid fa-eye me-2"></i>@Html.DisplayNameFor(model => model.ViewCount):
+                            @Html.DisplayFor(model => model.ViewCount)
+                        </div>
+                        <div class="font-weight-bold text-danger mb-1">
+                            <i class="fa-solid fa-sack-dollar me-2"></i>@Html.DisplayNameFor(model =>
+                            model.Tuition):
+                            @Html.DisplayFor(model => model.Tuition)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="detail">
+    <style>
+        .detail img {
+            max-width: 100%;
+        }
+    </style>
+
+    @Html.Raw(Model.Description)
+</div>

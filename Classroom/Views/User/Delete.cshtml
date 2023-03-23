@@ -1,0 +1,78 @@
+﻿@model Classroom.Models.System.Users.UserDeleteRequest
+
+@{
+    ViewData["Title"] = "Admin | Xóa người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .bg-gradient-primary {
+        background-color: #1cc88a;
+        background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%);
+        background-size: cover;
+    }
+</style>
+
+<h1 class="mt-4">Xóa người dùng</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
+
+    <li class="breadcrumb-item active">Xóa người dùng</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Bạn có chắc chắn muốn xoá người dùng này không?</h6>
+    </div>
+    <div class="card-header">
+        <a class="btn btn-success" asp-action="Index" asp-controller="User">Về danh sách</a>
+    </div>
+
+    <div class="card-body">
+        <div class="col-md-12">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Id)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Dob)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Dob)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input asp-for="Id" type="hidden" />
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+</div>

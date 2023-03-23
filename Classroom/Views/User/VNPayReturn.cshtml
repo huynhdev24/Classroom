@@ -1,0 +1,20 @@
+﻿@model Classroom.Models.VNPAY.VNPayReturn
+@{
+    ViewData["Title"] = "Kết quả nạp tiền";
+    var color = "alert-success";
+    if (Model.vnp_TransactionStatus!="00")
+        color = "alert-danger";
+}
+<div class="row">
+    <div class="col-12">
+        <h5>KẾT QUẢ THANH TOÁN</h5>
+    </div>
+    <div class="col-12">
+        <div class="alert @color" role="alert">
+            @Model.message
+        </div>
+    </div>
+    <div class="col-12">
+        <a asp-controller="User" asp-action="Pay" class="btn btn-primary float-right">Quay lại thanh toán</a>
+    </div>
+</div>

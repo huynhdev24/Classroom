@@ -1,0 +1,242 @@
+﻿@model Classroom.Models.Catalog.ExamSchedules.ExamSchedulesViewModel
+
+@{
+    ViewData["Title"] = "Quản lý đề thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+
+<script src="/js/plugins/bootbox.min.js"></script>
+<script src="/js/plugins/mustache.min.js"></script>
+<script src="/js/plugins/jquery.twbsPagination.min.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/js/controllers/questionController.js"></script>
+
+}
+
+<style>
+    .error {
+        color: red;
+        width: 100%;
+        font-size: 1rem;
+    }
+</style>
+<h1 class="mt-4">Quản lý đề thi</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="/Class">Câu hỏi</a></li>
+    <li class="breadcrumb-item active">Danh sách câu hỏi</li>
+</ol>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách câu hỏi</h6><i id="clickAdd"
+            class="fa-solid fa-square-plus text-primary"></i>
+    </div>
+    <div class="card-header d-none" id="frmAdd">
+        <div style="padding: 0;" class="col-md-12 col-xs-12">
+            <form role="form" id=frmSaveData>
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 10rem;"></th>
+                            <th scope="col">Nội dung câu hỏi</th>
+                            <th scope="col" style="width: 10rem;">Đáp án đúng</th>
+                            <th scope="col" style="width: 7rem;">Điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-primary">Câu hỏi: </th>
+                            <td><textarea placeholder="Nhập nội dung câu hỏi" type="text"
+                                    class="txtQSAdd form-control bg-light border-0 small" id="txtQSAdd"
+                                    name="txtQSAdd"></textarea></td>
+                            <td>
+                                <select class="slOpCAdd form-control bg-light border-0 small" id="slOpCAdd"
+                                    aria-label="Chọn đáp án đúng">
+                                    <option value="1">Đáp án 1</option>
+                                    <option value="2">Đáp án 2</option>
+                                    <option value="3">Đáp án 3</option>
+                                    <option value="4">Đáp án 4</option>
+                                </select>
+                            <td><input type="number" min="0"
+                                    class="txtPoint txtPointAdd form-control bg-light border-0 small" id="txtPointAdd"
+                                    value="0"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <table class="table mb-0">
+                                    <tbody>
+                                        <tr>
+                                            <th style="border: none"></th>
+                                            <th scope="row">Đáp án 1:</th>
+                                            <td colspan="2"><input placeholder="Nhập đáp án 1" type="text"
+                                                    class="txtOp1Add form-control bg-light border-0 small"
+                                                    id="txtOp1Add" name="txtOp1Add"></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="border: none"></th>
+                                            <th scope="row">Đáp án 2:</th>
+                                            <td colspan="2"><input placeholder="Nhập đáp án 2" type="text"
+                                                    class="txtOp2Add form-control bg-light border-0 small"
+                                                    id="txtOp2Add" name="txtOp2Add"></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="border: none"></th>
+                                            <th scope="row">Đáp án 3:</th>
+                                            <td colspan="2"><input placeholder="Nhập đáp án 3" type="text"
+                                                    class="txtOp3Add form-control bg-light border-0 small"
+                                                    id="txtOp3Add"></td>
+                                        </tr>
+                                        <tr>
+                                            <th style="border: none"></th>
+                                            <th scope="row">Đáp án 4:</th>
+                                            <td colspan="2"><input placeholder="Nhập đáp án 4" type="text"
+                                                    class="txtOp4Add form-control bg-light border-0 small"
+                                                    id="txtOp4Add"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-success" id="btnAddNew">Tạo mới</a>
+            </form>
+            <a href="" data-bs-toggle="modal" data-bs-target="#inputFile">Nhập file câu hỏi</a>
+            <!-- InputFile -->
+            <div class="modal fade" id="inputFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <form method="post" enctype="multipart/form-data" asp-controller="Question" asp-action="Import">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Nhập file câu hỏi</h1>
+                            </div>
+                            <div class="modal-body">
+                                Vui lòng tham khảo file mẫu dưới đây:
+                                <a href="/img/Mẫu nhập câu hỏi.xlsx" download>
+                                    Tải xuống
+                                </a>
+                                <input class="form-control" type="file" accept=".xlsx" name="file" />
+                                <select asp-for="ExamScheduleID" name="ExamScheduleId"
+                                    class="form-control bg-light mt-2 small" asp-items="ViewBag.ExamScheduleID">
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="padding-top: 0;">
+        <div class="table-responsive">
+            <form>
+                <div class="col-sm-12 col-md-12 my-3">
+                    <div class="row">
+                        @if (ViewBag.SuccessMsg != null)
+                        {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                        }
+                    </div>
+                    <div class="dataTables_filter">
+                        <div class="input-group">
+                            <input value="@ViewBag.Keyword" name="keyword" autocomplete="off" type="search"
+                                class="form-control bg-light border-0 small" placeholder="Tìm kiếm..."
+                                aria-controls="dataTable">
+                            <select asp-for="ExamScheduleID" id="selectList"
+                                class="form-control bg-light border-0 small" asp-items="ViewBag.ExamScheduleID">
+                            </select>
+                            <div class="input-group-append">
+                                <a asp-controller="Question" asp-action="Index" class="btn btn-secondary" type="submit">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 10rem;"></th>
+                        <th scope="col">Nội dung câu hỏi</th>
+                        <th scope="col" style="width: 10rem;">Đáp án đúng</th>
+                        <th scope="col" style="width: 7rem;">Điểm</th>
+                    </tr>
+                </thead>
+                <tbody id="tbData">
+                </tbody>
+            </table>
+
+            <div id="pagination" class="pagination">
+            </div>
+
+        </div>
+        <button class="btn btn-success btnSave">Lưu thay đổi</button>
+        @* @await Component.InvokeAsync("Pager", Model) *@
+    </div>
+</div>
+<script id="data-template" type="x-tmpl-mustache">
+    <tr>
+        <th scope="row" class="text-primary">Câu hỏi {{STT}}:<br>
+            <button data-id="{{QuestionID}}" value="{{QuestionID}}" class="btnSaveOne btn btn-success btn-sm">Lưu</button>
+            <button data-id="{{QuestionID}}" class="btnDelete btn btn-danger btn-sm">Xoá</button> 
+        </th>
+        <td><textarea style="border: none" placeholder="Nhập nội dung câu hỏi" type="text" class="txtQS{{QuestionID}} form-control" data-id="{{QuestionID}}">{{QuestionString}}</textarea></td>
+        <td>
+            <select style="border: none" class="slOpC{{QuestionID}} form-control" data-id="{{QuestionID}}" aria-label="Chọn đáp án đúng">
+                <option value="1">Đáp án 1</option>
+                <option value="2">Đáp án 2</option>
+                <option value="3">Đáp án 3</option>
+                <option value="4">Đáp án 4</option>
+            </select>
+        <td><input style="border: none" type="number" min="0" class="txtPoint txtPoint{{QuestionID}} form-control" data-id="{{QuestionID}}" value="{{Point}}"></td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <table class="table mb-0">
+                <tbody>
+                    <tr>
+                        <th style="border: none"></th>
+                        <th scope="row">Đáp án 1:</th>
+                        <td colspan="2"><input style="border: none" placeholder="Nhập đáp án 1" type="text" class="txtOp1{{QuestionID}} form-control" data-id="{{QuestionID}}" value="{{Option1}}"></td>
+                    </tr>
+                    <tr>
+                        <th style="border: none"></th>
+                        <th scope="row">Đáp án 2:</th>
+                        <td colspan="2"><input style="border: none" placeholder="Nhập đáp án 2" type="text" class="txtOp2{{QuestionID}} form-control" data-id="{{QuestionID}}" value="{{Option2}}"></td>
+                    </tr>
+                    <tr>
+                        <th style="border: none"></th>
+                        <th scope="row">Đáp án 3:</th>
+                        <td colspan="2"><input style="border: none" placeholder="Nhập đáp án 3" type="text" class="txtOp3{{QuestionID}} form-control" data-id="{{QuestionID}}" value="{{Option3}}"></td>
+                    </tr>
+                    <tr>
+                        <th style="border: none"></th>
+                        <th scope="row">Đáp án 4:</th>
+                        <td colspan="2"><input style="border: none" placeholder="Nhập đáp án 4" type="text" class="txtOp4{{QuestionID}} form-control" data-id="{{QuestionID}}" value="{{Option4}}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</script>

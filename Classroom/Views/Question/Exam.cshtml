@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model Classroom.Models.Catalog.ExamSchedules.ExamSchedulesViewModel
+@{
+    ViewData["Title"] = "Danh sách câu hỏi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+
+
+
+<script src="/js/plugins/bootbox.min.js"></script>
+<script src="/js/plugins/mustache.min.js"></script>
+<script src="/js/plugins/jquery.twbsPagination.min.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/js/controllers/examController.js"></script>
+
+
+}
+
+<style>
+    .error {
+        color: red;
+        width: 100%;
+        font-size: 1rem;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh sách câu hỏi</h6>
+            </div>
+            <div class="card-body" style="padding-top: 0;">
+                <div id="frmListQ" class="row row-cols-auto">
+
+                </div>
+                <a id="btnNop" class="btn btn-success btnSave">Nộp bài</a>
+            </div>
+        </div>
+
+        <!-- Display the countdown timer in an element -->
+
+
+
+    </div>
+    <div class="col-xl-8 col-lg-8">
+        <div id="cardBaiThi" class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Bài thi</h6>
+                <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+                <h6 class="text-info">Lớp học</h6>
+                @Model.ClassName
+                <br /><br />
+                <h6 class="text-info">Ngày thi</h6>
+                @Model.ExamDateTime.ToString("HH:mm - dddd dd/MM/yyyy")
+                <br /><br>
+                <h6 class="text-info">Thời gian làm bài</h6>
+                @Model.ExamTime phút
+                <input id="Timer" value="@Model.ExamTime" hidden>
+                <br><br>
+                <h6 class="text-info">Thời gian bắt đầu làm bài</h6>
+                @HttpContextAccessor.HttpContext.Session.GetString("DateTimeStudentExamD").ToString()
+                <input hidden id="ExamScheduleID" value="@HttpContextAccessor.HttpContext.Session.GetString("ExamScheduleID").ToString()">
+                <br><br>
+            </div>
+            <div class="card-body" style="padding-top: 0;">
+                <h3 class="my-2 text-center">Thời gian làm bài còn lại</h3>
+                <h3 class="countdown my-2 text-center font-weight-bold text-danger fs-1"></h3>
+                <table id="tbExamData" class="table my-1">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+
+
+
+<script id="data-template" type="x-tmpl-mustache">
+    <tr>
+        <td id="{{QuestionID}}" class="btn-outline-primary font-weight-bold">
+            Câu hỏi {{STT}}: {{QuestionString}}
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <div class="form-check mx-5">
+                <input class="form-check-input" type="radio" name="{{QuestionID}}" id="1"
+                value="{{Option1}}">
+                <label class="form-check-label" for="inlineRadio1">{{Option1}}</label>
+            </div>
+            <div class="form-check mx-5">
+                <input class="form-check-input" type="radio" name="{{QuestionID}}" id="2"
+                value="{{Option2}}">
+                <label class="form-check-label" for="inlineRadio2">{{Option2}}</label>
+            </div>
+            <div class="form-check mx-5">
+                <input class="form-check-input" type="radio" name="{{QuestionID}}" id="3"
+                value="{{Option3}}">
+                <label class="form-check-label" for="inlineRadio3">{{Option3}}</label>
+            </div>
+            <div class="form-check mx-5">
+                <input class="form-check-input" type="radio" name="{{QuestionID}}" id="4"
+                value="{{Option4}}">
+                <label class="form-check-label" for="inlineRadio3">{{Option4}}</label>
+            </div>
+        </td>
+    </tr>
+</script>
+<script id="data-template-listQ" type="x-tmpl-mustache">
+    <a href="#{{QuestionID}}" name="{{QuestionID}}" class="btn{{QuestionID}} col mx-2 my-2 btn btn-outline-primary text-nowrap">
+        {{STT}}
+    </a>
+</script>
+
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast5" class="toast text-bg-warning" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/logo-white.svg" style="width: 2rem;" class="rounded me-2" alt="...">
+            <strong class="me-auto">Nhắc nhở</strong>
+            <small>hiện tại</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Thời gian làm bài còn dưới 5 phút!
+        </div>
+    </div>
+
+    <div id="liveToast1" class="toast text-bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="/img/logo-white.svg" style="width: 2rem;" class="rounded me-2" alt="...">
+            <strong class="me-auto">Nhắc nhở</strong>
+            <small>hiện tại</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Thời gian làm bài còn dưới 1 phút!
+        </div>
+    </div>
+</div>

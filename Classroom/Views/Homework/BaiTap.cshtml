@@ -1,0 +1,125 @@
+﻿@using Classroom.Models.Common;
+@model PagedResult<Classroom.Models.Catalog.Homeworks.HomeworkViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách bài tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+<script>
+    setTimeout(function () {
+        $('#msgAlert').fadeOut('slow');
+    }, 2000);
+</script>
+}
+<h1 class="mt-4">Danh sách bài tập</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="Homework">Bài tập</a></li>
+    <li class="breadcrumb-item active">Danh sách bài tập</li>
+</ol>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách bài tập</h6>
+    </div>
+
+    <div class="card-body" style="padding-top: 0;">
+        <div class="table-responsive">
+            <form asp-action="BaiTap" method="get">
+                <div class="col-sm-12 col-md-6 my-3">
+                    <div class="row">
+                        @if (ViewBag.SuccessMsg != null)
+                        {
+                            <div id="msgAlert" class="alert alert-success" role="alert">
+                                @ViewBag.SuccessMsg
+                            </div>
+                        }
+                    </div>
+                    <div class="dataTables_filter">
+                        <div class="input-group">
+                            <input value="@ViewBag.Keyword" name="keyword" type="search"
+                                class="form-control bg-light border-0 small" autocomplete="off"
+                                placeholder="Tìm kiếm..." aria-controls="dataTable">
+                            <div class="input-group-append">
+                                <a asp-controller="Homework" asp-action="BaiTap" class="btn btn-secondary"
+                                    type="submit">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
+                            </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên lớp học
+                        </th>
+                        <th>
+                            Tên bài tập
+                        </th>
+                        <th>
+                            Hạn nộp bài
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items != null)
+                    {
+                        @foreach (var item in Model.Items)
+                        {
+                            if (Convert.ToDateTime(item.SubmissionDateTime) > DateTime.Now) continue;
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClassName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HomeworkName)
+                                </td>
+                                <td class="text-nowrap">
+                                    @Html.DisplayFor(modelItem => item.Deadline)
+                                </td>
+                                <td>
+                                    @if (item.MySubmission != null)
+                                    {
+                                        <p class="text-success">Đã nộp</p>
+                                    }
+                                    else
+                                    {
+                                        if (item.Deadline > DateTime.Now)
+                                        {
+                                            <p class="text-warning">Chưa nộp</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-danger">Quá hạn nộp</p>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <a style="text-decoration: none;"
+                                href="@Url.Action("Details", "Homework", new { id = item.HomeworkID })">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @await Component.InvokeAsync("Pager", Model)
+    </div>
+</div>

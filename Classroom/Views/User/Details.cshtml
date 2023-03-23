@@ -1,0 +1,69 @@
+﻿@model Classroom.Models.System.Users.UserViewModel
+
+@{
+    ViewData["Title"] = "Admin | Thông tin người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .bg-gradient-primary {
+        background-color: #1cc88a;
+        background-image: linear-gradient(180deg, #1cc88a 10%, #13855c 100%);
+        background-size: cover;
+    }
+</style>
+
+<h1 class="mt-4">Thông tin người dùng</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
+    <li class="breadcrumb-item active">Thông tin</li>
+</ol>
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Chi tiết người dùng</h6>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+
+            <div class="col-sm-4 mb-3">
+                @if (Model.Avatar == null)
+                {
+                    <img class="img-thumbnail" style="width: 100%;" src="/img/image_null.png" alt="/img/image_null.png">
+                }
+                else
+                {
+                    <img class="img-thumbnail" style="width: 100%;" src="@Model.Avatar" alt="@Model.Avatar">
+                }
+
+            </div>
+
+            <div class="col-sm-8">
+                <h4 class="text-info">Thông tin người dùng</h4>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.Id): @Html.DisplayFor(model => model.Id)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.FirstName): @Html.DisplayFor(model => model.FirstName)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.LastName): @Html.DisplayFor(model => model.LastName)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.PhoneNumber): @Html.DisplayFor(model => model.PhoneNumber)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.UserName): @Html.DisplayFor(model => model.UserName)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.Email): @Html.DisplayFor(model => model.Email)
+                </dt>
+                <dt class="mb-2">
+                    @Html.DisplayNameFor(model => model.Dob): @Html.DisplayFor(model => model.Dob)
+                </dt>
+            </div>
+        </dl>
+
+    </div>
+</div>

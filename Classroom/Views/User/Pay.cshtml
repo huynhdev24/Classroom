@@ -1,0 +1,45 @@
+@model Classroom.Models.VNPAY.RequestPayment
+@{
+    ViewData["Title"] = "Nạp tiền";
+}
+@if (ViewBag.thongBaoLoi != null && ViewBag.thongBaoLoi != "")
+{
+    <div class="alert alert-danger" role="alert">
+    @ViewBag.thongBaoLoi
+</div>
+}
+<form asp-controller="User" asp-action="Pay" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12">
+            <h5>THÔNG TIN THANH TOÁN <a target="_blank" href="https://sandbox.vnpayment.vn/apis/vnpay-demo/"><i>(Link
+                        tài khoản ngân hàng demo)</i></a></h5>
+        </div>
+    </div>    
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label class="font-weight-bold _required">Số tiền thanh toán (VND)</label>
+                <input class="form-control" type="number" step="10000" name="SoTien" placeholder="Số tiền thanh toán" value="100000" />
+            </div>
+        </div>
+        <select hidden class="form-control" name="LoaiHangHoa">
+            <option selected="selected" value="other">Thanh toán trực tuyến</option>
+            <option value="billpayment">Thanh toán hóa đơn</option>
+        </select>
+        <input hidden class="form-control" name="NoiDungThanhToan" placeholder="Nhập nội dung thanh toán..."/>
+        <select hidden class="form-control" name="NganHang">
+            <option value="">Chọn ngân hàng</option>
+            <option selected="selected" value="NCB">Ngân hàng NCB</option>
+            <option value="BIDV">Ngân hàng BIDV</option>
+            <option value="TECHCOMBANK">Ngân hàng Techcombank</option>
+        </select>
+        <select hidden class="form-control" name="NgonNgu">
+            <option selected="selected" value="vn">Tiếng Việt</option>
+            <option value="en">English</option>
+        </select>
+        <input hidden class="form-control decimal" name="ThoiHanThanhToan" placeholder="Format: yyyymmddhhmiss"
+            value="@Model.ThoiHanThanhToan" />
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Thực hiện thanh toán</button>
+        </div>
+</form>
