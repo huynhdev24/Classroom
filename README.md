@@ -1,4 +1,4 @@
-# Classroom
+# Classroom  [![.NET](https://github.com/huynhdev24/Classroom/actions/workflows/dotnet.yml/badge.svg)](https://github.com/huynhdev24/Classroom/actions/workflows/dotnet.yml)
 ## Technologies
 * ASP.NET Core
 * Entity Framework Core
