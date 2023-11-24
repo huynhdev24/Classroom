@@ -33,5 +33,5 @@ public class ConstantHelper
     public static string hostMail = "smtp.gmail.com";
     public static int portEmail = 587;
     public static string email = "huynh.it.24@gmail.com";
-    public static string pass = "obmobwggzouizxkp";
+    public static string pass = "efjfvqsuufgaumhe";
 }
