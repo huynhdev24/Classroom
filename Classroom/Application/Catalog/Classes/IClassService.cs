@@ -5,6 +5,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Classes
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IClassService
     {
         Task<int> Create(ClassCreateRequest request);

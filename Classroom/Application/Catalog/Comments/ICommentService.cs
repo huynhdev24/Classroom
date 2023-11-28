@@ -2,6 +2,10 @@
 using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Comments;
+
+/// <summary>
+/// 
+/// </summary>
 public interface ICommentService
 {
     Task<int> Create(CommentCreateRequest request);
