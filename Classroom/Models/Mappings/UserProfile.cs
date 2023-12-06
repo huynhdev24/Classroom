@@ -3,6 +3,10 @@ using Classroom.Data;
 using Classroom.Models.System.Users;
 
 namespace Classroom.Models.Mappings;
+
+/// <summary>
+/// UserProfile
+/// </summary>
 public class UserProfile : Profile
 {
     public UserProfile()

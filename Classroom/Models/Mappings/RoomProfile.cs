@@ -4,6 +4,9 @@ using Classroom.Models.Catalog.Rooms;
 
 namespace Classroom.Models.Mappings;
 
+/// <summary>
+/// RoomProfile
+/// </summary>
 public class RoomProfile : Profile
 {
     public RoomProfile()

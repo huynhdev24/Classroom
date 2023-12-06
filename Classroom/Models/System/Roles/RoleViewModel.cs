@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Models.System.Roles;
 
+/// <summary>
+/// RoleViewModel
+/// </summary>
 public class RoleViewModel
 {
     public Guid Id { get; set; }

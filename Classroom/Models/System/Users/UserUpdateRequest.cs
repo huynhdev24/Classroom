@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Classroom.Models.System.Users;
 
+/// <summary>
+/// UserUpdateRequest
+/// </summary>
 public class UserUpdateRequest
 {
     public Guid Id { get; set; }

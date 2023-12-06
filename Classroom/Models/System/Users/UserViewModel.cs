@@ -2,6 +2,9 @@
 
 namespace Classroom.Models.System.Users;
 
+/// <summary>
+/// UserViewModel
+/// </summary>
 public class UserViewModel
 {
     public string? Id { get; set; }

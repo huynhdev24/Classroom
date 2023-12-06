@@ -2,6 +2,9 @@
 
 namespace Classroom.Models.System.Users;
 
+/// <summary>
+/// UserDeleteRequest
+/// </summary>
 public class UserDeleteRequest
 {
     public string? Id { get; set; }

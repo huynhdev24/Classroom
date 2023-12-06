@@ -2,6 +2,9 @@
 
 namespace Classroom.Models.System.Users;
 
+/// <summary>
+/// RegisterRequest
+/// </summary>
 public class RegisterRequest
 {
     [Display(Name = "Họ")]

@@ -3,6 +3,10 @@ using Classroom.Data;
 using Classroom.Models.Catalog.Question;
 
 namespace Classroom.Models.Mappings;
+
+/// <summary>
+/// QuestionProfile
+/// </summary>
 public class QuestionProfile : Profile
 {
     public QuestionProfile()

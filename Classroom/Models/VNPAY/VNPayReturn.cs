@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Classroom.Models.VNPAY
 {
+    /// <summary>
+    /// VNPayReturn
+    /// </summary>
     public class VNPayReturn
     {
         public long vnp_Amount { get; set; }

@@ -3,6 +3,10 @@ using Classroom.Data;
 using Classroom.Models.Catalog.Classes;
 
 namespace Classroom.Models.Mappings;
+
+/// <summary>
+/// ClassProfile
+/// </summary>
 public class ClassProfile : Profile
 {
     public ClassProfile()

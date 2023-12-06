@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Classroom.Models.VNPAY;
 
+/// <summary>
+/// OrderInfo
+/// </summary>
 public class OrderInfo
 {
     public long OrderId { get; set; }

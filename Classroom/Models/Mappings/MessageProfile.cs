@@ -5,6 +5,9 @@ using Classroom.Models.Catalog.Messages;
 
 namespace Classroom.Models.Mappings
 {
+    /// <summary>
+    /// MessageProfile
+    /// </summary>
     public class MessageProfile : Profile
     {
         public MessageProfile()

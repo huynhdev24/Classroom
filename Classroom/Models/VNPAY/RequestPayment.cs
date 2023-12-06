@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Classroom.Models.VNPAY
 {
+    /// <summary>
+    /// RequestPayment
+    /// </summary>
     public class RequestPayment
     {
         [Required(ErrorMessage = "Vui lòng nhập số tiền")]

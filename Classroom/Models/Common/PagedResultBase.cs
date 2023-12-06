@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Models.Common;
 
+/// <summary>
+/// PagedResultBase
+/// </summary>
 public class PagedResultBase
 {
     public int PageIndex { get; set; }

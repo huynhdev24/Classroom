@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Models.Common;
 
+/// <summary>
+/// SelectItem
+/// </summary>
 public class SelectItem
 {
     public string? Id { get; set; }

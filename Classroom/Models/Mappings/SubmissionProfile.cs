@@ -5,6 +5,9 @@ using Classroom.Models.Catalog.Submissions;
 
 namespace Classroom.Models.Mappings
 {
+    /// <summary>
+    /// SubmissionProfile
+    /// </summary>
     public class SubmissionProfile : Profile
     {
         public SubmissionProfile()

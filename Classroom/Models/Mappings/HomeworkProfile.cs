@@ -3,6 +3,10 @@ using Classroom.Data;
 using Classroom.Models.Catalog.Homeworks;
 
 namespace Classroom.Models.Mappings;
+
+/// <summary>
+/// HomeworkProfile
+/// </summary>
 public class HomeworkProfile : Profile
 {
     public HomeworkProfile()

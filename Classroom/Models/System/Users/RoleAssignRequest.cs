@@ -1,6 +1,10 @@
 ﻿using Classroom.Models.Common;
 
 namespace Classroom.Models.System.Users;
+
+/// <summary>
+/// RoleAssignRequest
+/// </summary>
 public class RoleAssignRequest
 {
     public Guid Id { get; set; }
