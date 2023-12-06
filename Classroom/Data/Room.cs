@@ -1,5 +1,8 @@
 namespace Classroom.Data;
 
+/// <summary>
+/// Room
+/// </summary>
 public class Room
 {
     public int Id { set; get; }

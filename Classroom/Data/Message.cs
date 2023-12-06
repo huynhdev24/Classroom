@@ -1,4 +1,8 @@
 namespace Classroom.Data;
+
+/// <summary>
+/// Message
+/// </summary>
 public class Message
 {
     public int Id { get; set; }

@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// ExamSchedule
+/// </summary>
 public class ExamSchedule
 {
     public int ExamScheduleID { set; get; }

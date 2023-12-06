@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// Notification
+/// </summary>
 public class Notification
 {
     public int NotificationID { set; get; }

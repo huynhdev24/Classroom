@@ -3,6 +3,9 @@ using Classroom.Data.Enums;
 
 namespace Classroom.Data;
 
+/// <summary>
+/// Contact
+/// </summary>
 public class Contact
 {
     public int ContactID { set; get; }

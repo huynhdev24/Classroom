@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Classroom.Data;
 
+/// <summary>
+/// ApplicationDbContext
+/// </summary>
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -13,6 +16,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     {
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -61,9 +68,15 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<Message> Messages { set; get; } = default!;
 }
 
-
+/// <summary>
+/// ApplicationUserEntityConfiguration
+/// </summary>
 public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<ApplicationUser>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         builder.ToTable("AppUsers");
@@ -75,14 +88,24 @@ public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<Appli
     }
 }
 
+/// <summary>
+/// ApplicationRoleEntityConfiguration
+/// </summary>
 public class ApplicationRoleEntityConfiguration : IEntityTypeConfiguration<IdentityRole>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<IdentityRole> builder)
     {
         builder.ToTable("AppRoles");
     }
 }
 
+/// <summary>
+/// ClassConfiguration
+/// </summary>
 public class ClassConfiguration : IEntityTypeConfiguration<Class>
 {
     public void Configure(EntityTypeBuilder<Class> builder)
@@ -103,8 +126,15 @@ public class ClassConfiguration : IEntityTypeConfiguration<Class>
     }
 }
 
+/// <summary>
+/// ClassDetailConfiguration
+/// </summary>
 public class ClassDetailConfiguration : IEntityTypeConfiguration<ClassDetail>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<ClassDetail> builder)
     {
         builder.ToTable("ClassDetails");
@@ -116,8 +146,15 @@ public class ClassDetailConfiguration : IEntityTypeConfiguration<ClassDetail>
     }
 }
 
+/// <summary>
+/// CommentConfiguration
+/// </summary>
 public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Comment> builder)
     {
         builder.ToTable("Comments");
@@ -134,8 +171,15 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     }
 }
 
+/// <summary>
+/// ContactConfiguration
+/// </summary>
 public class ContactConfiguration : IEntityTypeConfiguration<Contact>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Contact> builder)
     {
         builder.ToTable("Contacts");
@@ -150,8 +194,15 @@ public class ContactConfiguration : IEntityTypeConfiguration<Contact>
     }
 }
 
+/// <summary>
+/// ExamScheduleConfiguration
+/// </summary>
 public class ExamScheduleConfiguration : IEntityTypeConfiguration<ExamSchedule>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<ExamSchedule> builder)
     {
         builder.ToTable("ExamSchedules");
@@ -170,8 +221,15 @@ public class ExamScheduleConfiguration : IEntityTypeConfiguration<ExamSchedule>
     }
 }
 
+/// <summary>
+/// HomeworkConfiguration
+/// </summary>
 public class HomeworkConfiguration : IEntityTypeConfiguration<Homework>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Homework> builder)
     {
         builder.ToTable("Homeworks");
@@ -188,8 +246,15 @@ public class HomeworkConfiguration : IEntityTypeConfiguration<Homework>
     }
 }
 
+/// <summary>
+/// HomeworkImageConfiguration
+/// </summary>
 public class HomeworkImageConfiguration : IEntityTypeConfiguration<HomeworkImage>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<HomeworkImage> builder)
     {
         builder.ToTable("HomeworkImages");
@@ -204,8 +269,15 @@ public class HomeworkImageConfiguration : IEntityTypeConfiguration<HomeworkImage
     }
 }
 
+/// <summary>
+/// MessageConfiguration
+/// </summary>
 public class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Message> builder)
     {
         builder.ToTable("Messages");
@@ -219,8 +291,15 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
     }
 }
 
+/// <summary>
+/// NotificationConfiguration
+/// </summary>
 public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Notification> builder)
     {
         builder.ToTable("Notifications");
@@ -235,8 +314,15 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
     }
 }
 
+/// <summary>
+/// NotificationImageConfiguration
+/// </summary>
 public class NotificationImageConfiguration : IEntityTypeConfiguration<NotificationImage>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<NotificationImage> builder)
     {
         builder.ToTable("NotificationImages");
@@ -251,8 +337,15 @@ public class NotificationImageConfiguration : IEntityTypeConfiguration<Notificat
     }
 }
 
+/// <summary>
+/// QuestionConfiguration
+/// </summary>
 public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Question> builder)
     {
         builder.ToTable("Questions");
@@ -267,8 +360,15 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
     }
 }
 
+/// <summary>
+/// RoomConfiguration
+/// </summary>
 public class RoomConfiguration : IEntityTypeConfiguration<Room>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Room> builder)
     {
         builder.ToTable("Rooms");
@@ -281,8 +381,15 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
     }
 }
 
+/// <summary>
+/// StudentExamConfiguration
+/// </summary>
 public class StudentExamConfiguration : IEntityTypeConfiguration<StudentExam>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<StudentExam> builder)
     {
         builder.ToTable("StudentExams");
@@ -300,8 +407,15 @@ public class StudentExamConfiguration : IEntityTypeConfiguration<StudentExam>
     }
 }
 
+/// <summary>
+/// SubmissionConfiguration
+/// </summary>
 public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<Submission> builder)
     {
         builder.ToTable("Submissions");
@@ -317,8 +431,15 @@ public class SubmissionConfiguration : IEntityTypeConfiguration<Submission>
     }
 }
 
+/// <summary>
+/// SubmissionImageConfiguration
+/// </summary>
 public class SubmissionImageConfiguration : IEntityTypeConfiguration<SubmissionImage>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     public void Configure(EntityTypeBuilder<SubmissionImage> builder)
     {
         builder.ToTable("SubmissionImages");

@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// HomeworkImage
+/// </summary>
 public class HomeworkImage
 {
     public int ImageID { set; get; }

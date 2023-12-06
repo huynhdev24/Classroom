@@ -2,6 +2,9 @@
 
 namespace Classroom.Data;
 
+/// <summary>
+/// Class
+/// </summary>
 public class Class
 {
     public int ID { set; get; }

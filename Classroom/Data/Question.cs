@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// Question
+/// </summary>
 public class Question
 {
     public int QuestionID { set; get; }

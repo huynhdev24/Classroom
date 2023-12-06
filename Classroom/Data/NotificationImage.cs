@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// NotificationImage
+/// </summary>
 public class NotificationImage
 {
     public int ImageID { set; get; }

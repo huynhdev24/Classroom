@@ -1,4 +1,8 @@
 ﻿namespace Classroom.Data;
+
+/// <summary>
+/// StudentExam
+/// </summary>
 public class StudentExam
 {
     public int StudentExamID { set; get; }

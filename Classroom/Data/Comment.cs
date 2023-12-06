@@ -1,5 +1,8 @@
 ﻿namespace Classroom.Data;
 
+/// <summary>
+/// Comment
+/// </summary>
 public class Comment
 {
     public int CommentID { set; get; }

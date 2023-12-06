@@ -33,6 +33,9 @@ public class ApplicationUser : IdentityUser
     public ICollection<Message>? Messages { get; set; }
 }
 
+/// <summary>
+/// ApplicationRole
+/// </summary>
 public class ApplicationRole : IdentityRole
 {
 

@@ -2,6 +2,9 @@
 
 namespace Classroom.Data;
 
+/// <summary>
+/// Submission
+/// </summary>
 public class Submission
 {
     public int SubmissionID { set; get; }
