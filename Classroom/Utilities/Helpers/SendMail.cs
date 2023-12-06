@@ -3,8 +3,18 @@ using System.Net.Mail;
 
 namespace Classroom.Utilities.Helpers;
 
+/// <summary>
+/// SendMail
+/// </summary>
 public class SendMail
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="toEmail"></param>
+    /// <param name="subject"></param>
+    /// <param name="body"></param>
+    /// <param name="attachFile"></param>
     public static void SendEmail(string toEmail, string subject, string body, string attachFile)
     {
         try

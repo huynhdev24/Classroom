@@ -1,7 +1,15 @@
 namespace Classroom.Utilities.Constants
 {
+    /// <summary>
+    /// SystemVariable
+    /// </summary>
     public static class SystemVariable
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string GetRanDomClassID(int length)
         {
             Random random = new Random();

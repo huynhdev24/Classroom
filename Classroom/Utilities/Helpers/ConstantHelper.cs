@@ -2,9 +2,16 @@ using System.Text;
 
 namespace Classroom.Utilities.Helpers;
 
+/// <summary>
+/// ConstantHelper
+/// </summary>
 public class ConstantHelper
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
     public static string ToHexString(string str)
     {
         var sb = new StringBuilder();
@@ -18,6 +25,11 @@ public class ConstantHelper
         return sb.ToString();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hexString"></param>
+    /// <returns></returns>
     public static string FromHexString(string hexString)
     {
         var bytes = new byte[hexString.Length / 2];

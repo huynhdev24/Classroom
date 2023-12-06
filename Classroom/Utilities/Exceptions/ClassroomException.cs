@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Classroom.Utilities.Exceptions
 {
+    /// <summary>
+    /// ClassroomException
+    /// </summary>
     public class ClassroomException : Exception
     {
         public ClassroomException()
