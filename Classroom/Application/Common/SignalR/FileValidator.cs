@@ -1,4 +1,8 @@
 ﻿namespace Classroom.Application.Common.SignalR;
+
+/// <summary>
+/// FileValidator
+/// </summary>
 public class FileValidator : IFileValidator
 {
     private readonly IConfiguration _configuration;
@@ -12,6 +16,11 @@ public class FileValidator : IFileValidator
         _allowedExtensions = _configuration.GetValue("FileUpload:AllowedExtensions", ".jpg,.jpeg,.png").Split(",");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     public bool IsValid(IFormFile file)
     {
         if (file?.Length > 0)

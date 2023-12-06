@@ -8,6 +8,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Notifications;
 
+/// <summary>
+/// NotificationService
+/// </summary>
 public class NotificationService : INotificationService
 {
     private readonly ApplicationDbContext _context;
@@ -20,6 +23,11 @@ public class NotificationService : INotificationService
         _context = context;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Update(NotificationUpdateRequest request)
     {
         var notification = await _context.Notifications.FindAsync(request.NotificationID);
@@ -53,6 +61,11 @@ public class NotificationService : INotificationService
         return await _context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="NotificationID"></param>
+    /// <returns></returns>
     public async Task<NotificationViewModel> GetById(int NotificationID)
     {
         var notification = await _context.Notifications.FindAsync(NotificationID);
@@ -74,6 +87,11 @@ public class NotificationService : INotificationService
         return notificationViewModel;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -82,6 +100,11 @@ public class NotificationService : INotificationService
         return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Create(NotificationCreateRequest request)
     {
         var notification = new Notification()
@@ -111,6 +134,11 @@ public class NotificationService : INotificationService
         return notification.NotificationID;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="NotificationID"></param>
+    /// <returns></returns>
     public async Task<int> Delete(int NotificationID)
     {
         var notification = await _context.Notifications.FindAsync(NotificationID);
@@ -119,6 +147,11 @@ public class NotificationService : INotificationService
         return await _context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<PagedResult<NotificationViewModel>> GetAllPaging(GetManageNotificationPagingRequest request)
     {
         //1. Select join

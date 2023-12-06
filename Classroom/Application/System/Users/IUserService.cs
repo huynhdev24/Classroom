@@ -4,6 +4,9 @@ using Classroom.Models.System.Users;
 
 namespace Classroom.Application.System.Users
 {
+    /// <summary>
+    /// IUserService
+    /// </summary>
     public interface IUserService{
         Task<bool> DepositMoney(string UserName, decimal money);
         Task<string> Register(RegisterRequest request);

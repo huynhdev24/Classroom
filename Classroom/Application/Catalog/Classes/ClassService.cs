@@ -17,6 +17,9 @@ using Classroom.Models.Catalog.ExamSchedules;
 
 namespace Classroom.Application.Catalog.Classes
 {
+    /// <summary>
+    /// ClassService
+    /// </summary>
     public class ClassService : IClassService
     {
         private readonly ApplicationDbContext _context;
@@ -36,6 +39,12 @@ namespace Classroom.Application.Catalog.Classes
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="classID"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<int> UpdateImage(int classID, ClassImageUpdateRequest request)
         {
             var _class = await _context.Classes.FindAsync(classID);
@@ -49,6 +58,11 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public async Task AddViewCount(int ID)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -57,6 +71,11 @@ namespace Classroom.Application.Catalog.Classes
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public async Task<bool> ChangeClassID(int ID)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -69,6 +88,11 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<int> Create(ClassCreateRequest request)
         {
             var _class = new Class()
@@ -108,6 +132,11 @@ namespace Classroom.Application.Catalog.Classes
             return _class.ID;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public async Task<int> Delete(int ID)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -122,6 +151,11 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<PagedResult<ClassViewModel>> GetAllClassPaging(ClassPagingRequest request)
         {
             //1. Select
@@ -163,6 +197,10 @@ namespace Classroom.Application.Catalog.Classes
             return pageResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<ClassViewModel>> GetAllClass()
         {
             //1. Select
@@ -180,6 +218,12 @@ namespace Classroom.Application.Catalog.Classes
             return classViewModel.ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public async Task<PagedResult<ClassViewModel>> GetAllMyClassPaging(ClassPagingRequest request, string UserId)
         {
             //1. Select
@@ -240,6 +284,12 @@ namespace Classroom.Application.Catalog.Classes
             return pageResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public async Task<PagedResult<ClassViewModel>> GetAllMyAdminClassPaging(ClassPagingRequest request, string UserId)
         {
             //1. Select
@@ -300,6 +350,11 @@ namespace Classroom.Application.Catalog.Classes
             return pageResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
         public async Task<List<Class>> GetAllMyAdminClass(string? UserId)
         {
             //1. Select
@@ -327,6 +382,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<PagedResult<ClassViewModel>> GetAllClassPagingHome(ClassPagingRequest request)
         {
             //1. Select
@@ -368,6 +428,11 @@ namespace Classroom.Application.Catalog.Classes
             return pageResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NotificationID"></param>
+        /// <returns></returns>
         public async Task<ICollection<NotificationImage>> GetAllNotificationImageByNotificationID(int NotificationID)
         {
             //1. Select join
@@ -385,6 +450,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NotificationID"></param>
+        /// <returns></returns>
         public async Task<ICollection<CommentViewModel>> GetCommentsById(int NotificationID)
         {
             //1. Select join
@@ -414,6 +484,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
         public async Task<ICollection<NotificationViewModel>> GetAllNotificationByClassID(int ClassID)
         {
             //1. Select join
@@ -438,6 +513,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
         public async Task<ICollection<ExamSchedulesViewModel>> GetAllExamScheduleByClassID(int ClassID)
         {
             //1. Select join
@@ -458,6 +538,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ClassViewModel> GetById(int id)
         {
             var @class = await _context.Classes.Include(x => x.ClassDetails).Include(x => x.Homeworks).Where(x => x.Status == Status.Active)
@@ -487,6 +572,11 @@ namespace Classroom.Application.Catalog.Classes
             return classViewModel;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<ClassViewModel> GetAdminById(int id)
         {
             var @class = await _context.Classes.Include(x => x.ClassDetails).Include(x => x.Homeworks)
@@ -516,6 +606,11 @@ namespace Classroom.Application.Catalog.Classes
             return classViewModel;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
         public async Task<ClassViewModel> GetById(string ClassID)
         {
             var @class = await _context.Classes.Include(x => x.ClassDetails).Include(x => x.Homeworks)
@@ -545,6 +640,11 @@ namespace Classroom.Application.Catalog.Classes
             return classViewModel;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<int> Update(ClassUpdateRequest request)
         {
             var _class = await _context.Classes.FindAsync(request.ID);
@@ -568,6 +668,12 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="isPublic"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateIsPublic(int ID, IsPublic isPublic)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -576,6 +682,12 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateStatus(int ID, Status status)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -584,6 +696,12 @@ namespace Classroom.Application.Catalog.Classes
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="tuition"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateTuition(int ID, decimal tuition)
         {
             var _class = await _context.Classes.FindAsync(ID);
@@ -600,6 +718,11 @@ namespace Classroom.Application.Catalog.Classes
             return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<string> UploadImage(ClassImageUpdateRequest request)
         {
             if (request != null)
@@ -609,6 +732,12 @@ namespace Classroom.Application.Catalog.Classes
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
         public async Task<string> JoinClass(int ID, string UserName)
         {
 
@@ -638,6 +767,11 @@ namespace Classroom.Application.Catalog.Classes
             return $"Tham gia lớp học thành công. Tài khoản -{_class.Tuition}đ";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
         public async Task<ICollection<ClassDetail>> GetAllStudentByClassID(int ClassID)
         {
             //1. Select join
@@ -664,6 +798,11 @@ namespace Classroom.Application.Catalog.Classes
             return data;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<PagedResult<ClassDetailViewModel>> GetAllStudentByClassIDPaging(GetAllStudentInClassPagingRequest request)
         {
             //1. Select join
@@ -709,6 +848,11 @@ namespace Classroom.Application.Catalog.Classes
             return pagedResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
         public async Task<List<ClassDetailViewModel>> GetAllStudentByClassIDD(int ClassID)
         {
             //1. Select join

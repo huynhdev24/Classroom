@@ -1,6 +1,15 @@
 ﻿namespace Classroom.Application.Common.SignalR;
+
+/// <summary>
+/// BasicEmojis
+/// </summary>
 public class BasicEmojis
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
     public static string ParseEmojis(string content)
     {
         content = content.Replace(":)", Img("emoji1.png"));
@@ -14,6 +23,11 @@ public class BasicEmojis
         return content;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="imageName"></param>
+    /// <returns></returns>
     private static string Img(string imageName)
     {
         return ("<img class=\"emoji\" src=\"/images/emojis/" + imageName + "\">");

@@ -10,6 +10,9 @@ using AutoMapper;
 
 namespace Classroom.Application.Catalog.Questions;
 
+/// <summary>
+/// QuestionService
+/// </summary>
 public class QuestionService : IQuestionService
 {
     private readonly ApplicationDbContext _context;
@@ -22,6 +25,11 @@ public class QuestionService : IQuestionService
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Create(QuestionsCreateRequest request)
     {
         var question = _mapper.Map<QuestionsCreateRequest, Question>(request);
@@ -30,6 +38,11 @@ public class QuestionService : IQuestionService
         return question.QuestionID;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="QuestionID"></param>
+    /// <returns></returns>
     public async Task<int> Delete(int QuestionID)
     {
         var question = await _context.Questions.FindAsync(QuestionID);
@@ -39,6 +52,11 @@ public class QuestionService : IQuestionService
         return await _context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ExamScheduleID"></param>
+    /// <returns></returns>
     public async Task<PagedResult<Question>> GetExamPaper(int ExamScheduleID)
     {
         var data = await _context.Questions.Where(x=> x.ExamScheduleID == ExamScheduleID).ToListAsync();
@@ -49,6 +67,11 @@ public class QuestionService : IQuestionService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<PagedResult<QuestionViewModel>> GetAllPaging(GetManageQuestionPagingRequest request)
     {
         //1. Select join
@@ -90,6 +113,11 @@ public class QuestionService : IQuestionService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="QuestionID"></param>
+    /// <returns></returns>
     public async Task<QuestionViewModel> GetById(int QuestionID)
     {
         var question = await _context.Questions.FindAsync(QuestionID);
@@ -99,6 +127,11 @@ public class QuestionService : IQuestionService
         return questionViewModel;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Update(QuestionUpdateRequest request)
     {
         var question = await _context.Questions.FindAsync(request.QuestionID);

@@ -3,6 +3,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.StudentExams;
 
+/// <summary>
+/// IStudentExamService
+/// </summary>
 public interface IStudentExamService
 {
     Task<int> Create(StudentExamsCreateRequest request);

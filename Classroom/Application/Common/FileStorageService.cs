@@ -1,5 +1,8 @@
 namespace Classroom.Application.Common
 {
+    /// <summary>
+    /// FileStorageService
+    /// </summary>
     public class FileStorageService : IStorageService
     {
         private readonly string _userContentFolder;
@@ -10,11 +13,22 @@ namespace Classroom.Application.Common
             _userContentFolder = Path.Combine(webHostEnvironment.WebRootPath, USER_CONTENT_FOLDER_NAME);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public string GetFileUrl(string fileName)
         {
             return $"/{USER_CONTENT_FOLDER_NAME}/{fileName}";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mediaBinaryStream"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task SaveFileAsync(Stream mediaBinaryStream, string fileName)
         {
             var filePath = Path.Combine(_userContentFolder, fileName);
@@ -22,6 +36,11 @@ namespace Classroom.Application.Common
             await mediaBinaryStream.CopyToAsync(output);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public async Task DeleteFileAsync(string fileName)
         {
             var filePath = Path.Combine(_userContentFolder, fileName);

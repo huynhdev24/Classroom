@@ -3,6 +3,10 @@ using Classroom.Models.Catalog.Contact;
 using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Contacts;
+
+/// <summary>
+/// IContactService
+/// </summary>
 public interface IContactService
 {
     Task<bool> Create(Contact request);

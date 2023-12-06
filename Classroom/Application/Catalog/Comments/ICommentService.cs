@@ -4,7 +4,7 @@ using Classroom.Models.Common;
 namespace Classroom.Application.Catalog.Comments;
 
 /// <summary>
-/// 
+/// ICommentService
 /// </summary>
 public interface ICommentService
 {

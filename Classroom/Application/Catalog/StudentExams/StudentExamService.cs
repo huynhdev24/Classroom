@@ -7,6 +7,9 @@ using Classroom.Data;
 
 namespace Classroom.Application.Catalog.StudentExams;
 
+/// <summary>
+/// StudentExamService
+/// </summary>
 public class StudentExamService : IStudentExamService
 {
     private readonly ApplicationDbContext _context;
@@ -18,6 +21,11 @@ public class StudentExamService : IStudentExamService
         _userManager = userManager;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Create(StudentExamsCreateRequest request)
     {
         var student = await _userManager.FindByNameAsync(request.UserName);
@@ -35,6 +43,11 @@ public class StudentExamService : IStudentExamService
         return studentExam.StudentExamID;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="StudentExamID"></param>
+    /// <returns></returns>
     public async Task<int> Delete(int StudentExamID)
     {
         var studentExam = await _context.StudentExams.FindAsync(StudentExamID);
@@ -44,6 +57,11 @@ public class StudentExamService : IStudentExamService
         return await _context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<PagedResult<StudentExamsViewModel>> GetAllPaging(GetManageStudentExamPagingRequest request)
     {
         //1. Select join
@@ -133,6 +151,11 @@ public class StudentExamService : IStudentExamService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<PagedResult<StudentExamsViewModel>> GetAllAdmin(GetManageStudentExamPagingRequest request)
     {
         //1. Select join
@@ -183,6 +206,11 @@ public class StudentExamService : IStudentExamService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<int> Update(StudentExamsUpdateRequest request)
     {
         var studentExam = await _context.StudentExams.FindAsync(request.StudentExamID);
@@ -192,6 +220,12 @@ public class StudentExamService : IStudentExamService
         return await _context.SaveChangesAsync();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ExamScheduleID"></param>
+    /// <param name="UserId"></param>
+    /// <returns></returns>
     public async Task<StudentExamsViewModel> GetById(int ExamScheduleID, string UserId)
     {
         var studentExam = await _context.StudentExams.FirstOrDefaultAsync(x => x.ExamScheduleID == ExamScheduleID && x.StudentID == UserId);

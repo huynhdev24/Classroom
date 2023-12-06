@@ -6,7 +6,7 @@ using Classroom.Models.Common;
 namespace Classroom.Application.Catalog.Classes
 {
     /// <summary>
-    /// 
+    /// IClassService
     /// </summary>
     public interface IClassService
     {

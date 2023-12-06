@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace Classroom.Application.Common.VNPAY
 {
+    /// <summary>
+    /// Utils
+    /// </summary>
     public class Utils
     {
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="inputData"></param>
+        /// <returns></returns>
         public static String HmacSHA512(string key, String inputData)
         {
             var hash = new StringBuilder();

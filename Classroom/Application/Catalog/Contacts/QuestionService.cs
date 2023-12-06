@@ -10,6 +10,9 @@ using Classroom.Models.Catalog.Contact;
 
 namespace Classroom.Application.Catalog.Contacts;
 
+/// <summary>
+/// ContactService
+/// </summary>
 public class ContactService : IContactService
 {
     private readonly ApplicationDbContext _context;
@@ -22,6 +25,11 @@ public class ContactService : IContactService
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<bool> Create(Contact request)
     {
         request.DateTimeCreated = DateTime.Now;
@@ -30,6 +38,11 @@ public class ContactService : IContactService
         return true;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ContactID"></param>
+    /// <returns></returns>
     public async Task<bool> Delete(int ContactID)
     {
         var contact = await _context.Contacts.FindAsync(ContactID);
@@ -39,6 +52,11 @@ public class ContactService : IContactService
         return true;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     public async Task<PagedResult<Contact>> GetAllPaging(GetAllPagingRequest request)
     {
         //1. Select join
@@ -60,6 +78,11 @@ public class ContactService : IContactService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ContactID"></param>
+    /// <returns></returns>
     public async Task<Contact> GetById(int ContactID)
     {
         var Contact = await _context.Contacts.FindAsync(ContactID);

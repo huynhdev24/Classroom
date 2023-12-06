@@ -3,6 +3,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Homeworks;
 
+/// <summary>
+/// IHomeworkService
+/// </summary>
 public interface IHomeworkService
 {
     Task<int> Create(HomeworkCreateRequest request);

@@ -3,6 +3,10 @@ using Classroom.Models.Catalog.Question;
 using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Questions;
+
+/// <summary>
+/// IQuestionService
+/// </summary>
 public interface IQuestionService
 {
     Task<int> Create(QuestionsCreateRequest request);

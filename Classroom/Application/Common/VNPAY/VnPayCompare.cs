@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace Classroom.Application.Common.VNPAY
 {
+    /// <summary>
+    /// VnPayCompare
+    /// </summary>
     public class VnPayCompare : IComparer<string>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public int Compare(string x, string y)
         {
             if (x == y) return 0;

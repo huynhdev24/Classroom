@@ -5,6 +5,9 @@ using AutoMapper;
 
 namespace Classroom.Application.Catalog.Rooms
 {
+    /// <summary>
+    /// RoomService
+    /// </summary>
     public class RoomService : IRoomService
     {
         private readonly ApplicationDbContext _context;
@@ -21,6 +24,12 @@ namespace Classroom.Application.Catalog.Rooms
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="ClassName"></param>
+        /// <returns></returns>
         public async Task<int> Create(string UserName, string ClassName)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserName == UserName);

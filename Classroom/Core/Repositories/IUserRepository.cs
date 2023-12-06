@@ -2,6 +2,9 @@
 
 namespace Classroom.Core.Repositories;
 
+/// <summary>
+/// IUserRepository
+/// </summary>
 public interface IUserRepository
 {
     ICollection<ApplicationUser> GetUsers(string? keyword);

@@ -2,6 +2,10 @@
 using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Submissions;
+
+/// <summary>
+/// ISubmissionService
+/// </summary>
 public interface ISubmissionService
 {
     Task<bool> Create(SubmissionCreateRequest request);

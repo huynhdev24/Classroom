@@ -4,6 +4,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.ExamSchedules;
 
+/// <summary>
+/// IExamScheduleService
+/// </summary>
 public interface IExamScheduleService
 {
     Task<int> Create(ExamSchedulesCreateRequest request);

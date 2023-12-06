@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Classroom.Application.Common
 {
+    /// <summary>
+    /// IStorageService
+    /// </summary>
     public interface IStorageService
     {
         string GetFileUrl(string fileName);

@@ -3,6 +3,9 @@ using Classroom.Models.Common;
 
 namespace Classroom.Application.Catalog.Notifications;
 
+/// <summary>
+/// INotificationService
+/// </summary>
 public interface INotificationService
 {
     Task<int> Create(NotificationCreateRequest request);
