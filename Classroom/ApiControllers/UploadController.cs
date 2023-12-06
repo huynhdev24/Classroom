@@ -37,6 +37,11 @@ public class UploadsController : ControllerBase
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -47,6 +52,11 @@ public class UploadsController : ControllerBase
 
     [HttpPost]
     //[ValidateAntiForgeryToken]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uploadViewModel"></param>
+    /// <returns></returns>
     public async Task<ActionResult<Message>> Upload([FromForm] UploadViewModel uploadViewModel)
     {
         if (ModelState.IsValid)

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Classroom.Repositories
 {
+    /// <summary>
+    /// RoleRepository
+    /// </summary>
     public class RoleRepository : IRoleRepository
     {
         private readonly ApplicationDbContext _context;
@@ -13,6 +16,10 @@ namespace Classroom.Repositories
             _context = context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ICollection<IdentityRole> GetRoles()
         {
             return _context.Roles.ToList();

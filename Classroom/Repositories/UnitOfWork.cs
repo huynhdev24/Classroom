@@ -2,6 +2,9 @@
 
 namespace Classroom.Repositories
 {
+    /// <summary>
+    /// UnitOfWork
+    /// </summary>
     public class UnitOfWork : IUnitOfWork
     {
         public IUserRepository User { get; }

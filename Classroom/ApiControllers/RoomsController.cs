@@ -27,6 +27,10 @@ namespace Classroom.ApiControllers
             _hubContext = hubContext;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomViewModel>>> Get()
         {
@@ -37,6 +41,11 @@ namespace Classroom.ApiControllers
             return Ok(roomsViewModel);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> Get(int id)
         {
@@ -48,6 +57,11 @@ namespace Classroom.ApiControllers
             return Ok(roomViewModel);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Room>> Create(RoomViewModel roomViewModel)
         {
@@ -69,6 +83,12 @@ namespace Classroom.ApiControllers
             return CreatedAtAction(nameof(Get), new { id = room.Id }, new { id = room.Id, name = room.Name });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="roomViewModel"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(int id, RoomViewModel roomViewModel)
         {
@@ -91,6 +111,11 @@ namespace Classroom.ApiControllers
             return Ok();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
