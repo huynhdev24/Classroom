@@ -21,6 +21,7 @@ using Classroom.Application.Catalog.ExamSchedules;
 using Classroom.Application.Catalog.Questions;
 using Classroom.Application.Catalog.StudentExams;
 using Classroom.Application.Catalog.Contacts;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var mvcBuilder = builder.Services.AddRazorPages();
@@ -77,7 +78,16 @@ AddAuthorizationPolicies();
 
 AddTransient();
 
+// used to: localhost
 builder.Services.AddSingleton(builder.Configuration.GetSection("VNPayConfig").Get<VNPayConfig>());
+
+// used to: hosting
+//VNPayConfig vnpayConfig = builder.Configuration.GetSection("VNPayConfig").Get<VNPayConfig>();
+//if (vnpayConfig != null)
+//{
+//    // Use the configuration
+//    builder.Services.AddSingleton(vnpayConfig);
+//}
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
