@@ -9,6 +9,10 @@ namespace Classroom.Models.Mappings;
 /// </summary>
 public class ExamScheduleProfile : Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <author>huynhdev24</author>
     public ExamScheduleProfile()
     {
         CreateMap<ExamSchedule, ExamSchedulesViewModel>();

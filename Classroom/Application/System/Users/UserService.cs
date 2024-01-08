@@ -18,6 +18,15 @@ namespace Classroom.Application.System.Users
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="configuration"></param>
+        /// <param name="mapper"></param>
+        /// <author>huynhdev24</author>
         public UserService(UserManager<ApplicationUser> userManager
         , SignInManager<ApplicationUser> signInManager
         , IConfiguration configuration
@@ -34,6 +43,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<string> Register(RegisterRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
@@ -70,6 +80,7 @@ namespace Classroom.Application.System.Users
         /// <param name="id"></param>
         /// <param name="request"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<string> Update(string id, ApplicationUser request)
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != id))
@@ -96,6 +107,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<bool> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -115,6 +127,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<UserViewModel> GetById(string id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
@@ -134,6 +147,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="UserName"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<UserViewModel> GetByName(string UserName)
         {
             var user = await _userManager.FindByNameAsync(UserName);
@@ -152,6 +166,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="Email"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<UserViewModel> GetByEmail(string Email)
         {
             var user = await _userManager.FindByEmailAsync(Email);
@@ -172,6 +187,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="strInput"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public static string RemoveUnicode(string strInput)
         {
             if (ReferenceEquals(RemoveUnicode_rg, null))
@@ -187,6 +203,7 @@ namespace Classroom.Application.System.Users
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
@@ -224,6 +241,7 @@ namespace Classroom.Application.System.Users
         /// <param name="UserName"></param>
         /// <param name="money"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<bool> DepositMoney(string UserName, decimal money)
         {
             var user = await _userManager.FindByNameAsync(UserName);

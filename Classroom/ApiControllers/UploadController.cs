@@ -24,6 +24,15 @@ public class UploadsController : ControllerBase
     private readonly UserManager<ApplicationUser> _userManager;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hubContext"></param>
+    /// <param name="storageService"></param>
+    /// <param name="context"></param>
+    /// <param name="userManager"></param>
+    /// <param name="mapper"></param>
+    /// <author>huynhdev24</author>
     public UploadsController(IHubContext<ChatHub> hubContext,
                              IStorageService storageService,
                              ApplicationDbContext context,
@@ -42,6 +51,7 @@ public class UploadsController : ControllerBase
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -57,6 +67,7 @@ public class UploadsController : ControllerBase
     /// </summary>
     /// <param name="uploadViewModel"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<ActionResult<Message>> Upload([FromForm] UploadViewModel uploadViewModel)
     {
         if (ModelState.IsValid)

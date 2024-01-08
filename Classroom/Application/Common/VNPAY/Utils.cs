@@ -19,6 +19,7 @@ namespace Classroom.Application.Common.VNPAY
         /// <param name="key"></param>
         /// <param name="inputData"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public static String HmacSHA512(string key, String inputData)
         {
             var hash = new StringBuilder();

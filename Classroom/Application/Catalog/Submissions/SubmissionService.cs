@@ -20,6 +20,13 @@ public class SubmissionService : ISubmissionService
     private readonly UserManager<ApplicationUser> _userManager;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="userManager"></param>
+    /// <param name="storageService"></param>
+    /// <author>huynhdev24</author>
     public SubmissionService(ApplicationDbContext context,
                              UserManager<ApplicationUser> userManager,
                              IStorageService storageService)
@@ -34,6 +41,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> Create(SubmissionCreateRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.StudentID);
@@ -74,6 +82,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -87,6 +96,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> Update(SubmissionUpdateRequest request)
     {
         var submission = _context.Submissions.FirstOrDefault(x => x.SubmissionID == request.SubmissionID);
@@ -127,6 +137,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="SubmissionID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> Delete(int SubmissionID)
     {
         var submission = await _context.Submissions.FindAsync(SubmissionID);
@@ -146,6 +157,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="SubmissionID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<SubmissionViewModel> GetById(int SubmissionID)
     {
         var submission = await _context.Submissions.FindAsync(SubmissionID);
@@ -193,6 +205,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<SubmissionViewModel>> GetAllPaging(GetManageSubmissionPagingRequest request)
     {
         //1. Select join
@@ -251,6 +264,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<SubmissionViewModel>> GetMyAllPaging(GetManageSubmissionPagingRequest request)
     {
         //1. Select join
@@ -313,6 +327,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<SubmissionViewModel>> GetMyAll(GetManageSubmissionPagingRequest request)
     {
         //1. Select join
@@ -374,6 +389,7 @@ public class SubmissionService : ISubmissionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> UpdateMark(SubmissionUpdateMarkRequest request)
     {
         var submission = _context.Submissions.FirstOrDefault(x => x.SubmissionID == request.SubmissionID);

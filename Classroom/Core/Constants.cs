@@ -8,6 +8,7 @@
         /// <summary>
         /// Roles
         /// </summary>
+        /// <author>huynhdev24</author>
         public static class Roles
         {
             public const string Administrator = "Administrator";
@@ -18,6 +19,7 @@
         /// <summary>
         /// Policies
         /// </summary>
+        /// <author>huynhdev24</author>
         public static class Policies
         {
             public const string RequireAdmin = "RequireAdmin";

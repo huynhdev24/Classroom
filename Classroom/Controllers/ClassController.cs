@@ -16,6 +16,14 @@ namespace Classroom.Controllers
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="classService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="roomService"></param>
+        /// <param name="userService"></param>
+        /// <author>huynhdev24</author>
         public ClassController(
             IClassService classService,
             IMapper mapper,
@@ -28,6 +36,14 @@ namespace Classroom.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("admin/quan-tri-lop-hoc")]
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -46,6 +62,13 @@ namespace Classroom.Controllers
             return View(classes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="HomeworkID"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<IActionResult> Report(int HomeworkID, string keyword)
         {
             var data = await _classService.GetAllClass();
@@ -90,6 +113,14 @@ namespace Classroom.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("danh-sach-lop-hoc")]
         public async Task<IActionResult> MyClass(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -109,6 +140,14 @@ namespace Classroom.Controllers
             return View(classes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("giao-vien/danh-sach-lop-hoc")]
         public async Task<IActionResult> MyAdminClass(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -128,6 +167,12 @@ namespace Classroom.Controllers
             return View(classes);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("tong-quan-lop-hoc")]
         public async Task<IActionResult> OverView(int id)
         {
@@ -141,6 +186,12 @@ namespace Classroom.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("chi-tiet-lop-hoc")]
         public async Task<IActionResult> Details(int id)
         {
@@ -154,12 +205,23 @@ namespace Classroom.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("tao-lop-hoc")]
         public IActionResult Create()
         {
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("tao-lop-hoc")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ClassCreateRequest request)
@@ -182,12 +244,23 @@ namespace Classroom.Controllers
             return View(request);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("khong-tim-thay-lop-hoc")]
         public IActionResult NotFind()
         {
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost, ActionName("JoinClass")]
         public async Task<IActionResult> JoinClass(int id)
         {
@@ -207,6 +280,12 @@ namespace Classroom.Controllers
             return RedirectToAction("OverView", new { id = id });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("tham-gia-lop-hoc"), ActionName("JoinClassById")]
         public async Task<IActionResult> JoinClassById(string ClassID)
         {
@@ -216,6 +295,12 @@ namespace Classroom.Controllers
             return RedirectToAction("OverView", new { id = @class.ID });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("chinh-sua-lop-hoc")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -225,6 +310,12 @@ namespace Classroom.Controllers
             return View(classViewModel);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("chinh-sua-lop-hoc")]
         [ValidateAntiForgeryToken]
         [Consumes("multipart/form-data")]
@@ -238,6 +329,12 @@ namespace Classroom.Controllers
             return RedirectToAction("Details", "Class", new { id = request.ID });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("admin/chinh-sua-lop-hoc")]
         public async Task<IActionResult> AdminEdit(int id)
         {
@@ -247,6 +344,12 @@ namespace Classroom.Controllers
             return View(classViewModel);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("admin/chinh-sua-lop-hoc")]
         [ValidateAntiForgeryToken]
         [Consumes("multipart/form-data")]
@@ -260,6 +363,12 @@ namespace Classroom.Controllers
             return RedirectToAction("Index", "Class");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<IActionResult> ChangeClassID(int id)
         {
             await _classService.ChangeClassID(id);
@@ -267,6 +376,11 @@ namespace Classroom.Controllers
             return RedirectToAction("Details", "Class", new { id = id });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadImage()
@@ -287,6 +401,12 @@ namespace Classroom.Controllers
             return Json(new { url = filePath });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -296,6 +416,12 @@ namespace Classroom.Controllers
         }
 
         // POST: Classes/Delete/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

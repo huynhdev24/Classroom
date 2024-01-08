@@ -8,6 +8,7 @@ namespace Classroom.Models.VNPAY
     /// <summary>
     /// VNPayConfig
     /// </summary>
+    /// <author>huynhdev24</author>
     public class VNPayConfig
     {
         public static string? vnp_Url { get; set; }

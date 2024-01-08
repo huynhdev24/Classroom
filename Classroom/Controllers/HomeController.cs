@@ -19,6 +19,15 @@ namespace Classroom.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="classService"></param>
+        /// <param name="context"></param>
+        /// <param name="userService"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="mapper"></param>
+        /// <author>huynhdev24</author>
         public HomeController(IClassService classService,
                               ApplicationDbContext context,
                               IUserService userService,
@@ -32,6 +41,14 @@ namespace Classroom.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<IActionResult> Index(string keyword,
                                          int pageIndex = 1,
                                          int pageSize = 10)
@@ -88,11 +105,21 @@ namespace Classroom.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

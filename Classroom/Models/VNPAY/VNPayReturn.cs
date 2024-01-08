@@ -8,6 +8,7 @@ namespace Classroom.Models.VNPAY
     /// <summary>
     /// VNPayReturn
     /// </summary>
+    /// <author>huynhdev24</author>
     public class VNPayReturn
     {
         public long vnp_Amount { get; set; }

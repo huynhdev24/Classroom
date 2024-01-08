@@ -15,6 +15,12 @@ public class StudentExamService : IStudentExamService
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="userManager"></param>
+    /// <author>huynhdev24</author>
     public StudentExamService(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
@@ -26,6 +32,7 @@ public class StudentExamService : IStudentExamService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Create(StudentExamsCreateRequest request)
     {
         var student = await _userManager.FindByNameAsync(request.UserName);
@@ -48,6 +55,7 @@ public class StudentExamService : IStudentExamService
     /// </summary>
     /// <param name="StudentExamID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Delete(int StudentExamID)
     {
         var studentExam = await _context.StudentExams.FindAsync(StudentExamID);
@@ -62,6 +70,7 @@ public class StudentExamService : IStudentExamService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<StudentExamsViewModel>> GetAllPaging(GetManageStudentExamPagingRequest request)
     {
         //1. Select join
@@ -100,6 +109,12 @@ public class StudentExamService : IStudentExamService
         return pagedResult;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<StudentExamsViewModel>> GetAllAdminPaging(GetManageStudentExamPagingRequest request)
     {
         //1. Select join
@@ -156,6 +171,7 @@ public class StudentExamService : IStudentExamService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<StudentExamsViewModel>> GetAllAdmin(GetManageStudentExamPagingRequest request)
     {
         //1. Select join
@@ -211,6 +227,7 @@ public class StudentExamService : IStudentExamService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Update(StudentExamsUpdateRequest request)
     {
         var studentExam = await _context.StudentExams.FindAsync(request.StudentExamID);
@@ -226,6 +243,7 @@ public class StudentExamService : IStudentExamService
     /// <param name="ExamScheduleID"></param>
     /// <param name="UserId"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<StudentExamsViewModel> GetById(int ExamScheduleID, string UserId)
     {
         var studentExam = await _context.StudentExams.FirstOrDefaultAsync(x => x.ExamScheduleID == ExamScheduleID && x.StudentID == UserId);

@@ -13,6 +13,14 @@ public class HomeworkController : BaseController
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="homeworkService"></param>
+    /// <param name="classService"></param>
+    /// <param name="configuration"></param>
+    /// <param name="mapper"></param>
+    /// <author>huynhdev24</author>
     public HomeworkController(IHomeworkService homeworkService,
                               IClassService classService,
                               IConfiguration configuration,
@@ -24,6 +32,15 @@ public class HomeworkController : BaseController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ClassID"></param>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Route("giao-vien/bai-tap")]
     public async Task<IActionResult> Index(int ClassID, string keyword, int pageIndex = 1, int pageSize = 10)
     {
@@ -50,6 +67,14 @@ public class HomeworkController : BaseController
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Route("bai-tap")]
     public async Task<IActionResult> BaiTap(string keyword, int pageIndex = 1, int pageSize = 10)
     {
@@ -69,12 +94,23 @@ public class HomeworkController : BaseController
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Create([FromForm] HomeworkCreateRequest request)
@@ -95,6 +131,12 @@ public class HomeworkController : BaseController
         return View(request);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("chi-tiet-bai-tap")]
     public async Task<IActionResult> Details(int id)
     {
@@ -107,6 +149,13 @@ public class HomeworkController : BaseController
         return View(result);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ClassID"></param>
+    /// <param name="HomeworkID"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("gui-mail-bai-tap")]
     public async Task<IActionResult> SendMail(int ClassID, int HomeworkID)
     {
@@ -123,6 +172,12 @@ public class HomeworkController : BaseController
         return RedirectToAction("Details", "Homework", new { id = HomeworkID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("chinh-sua-bai-tap")]
     public async Task<IActionResult> Edit(int id)
     {
@@ -132,6 +187,11 @@ public class HomeworkController : BaseController
         return View(homeworkViewModel);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost("chinh-sua-bai-tap")]
     [ValidateAntiForgeryToken]
     [Consumes("multipart/form-data")]
@@ -146,6 +206,13 @@ public class HomeworkController : BaseController
         return RedirectToAction("Details", "Homework", new { id = homework.HomeworkID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="returnUrl"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Delete(int id, string returnUrl)
     {
         if (!ModelState.IsValid)

@@ -8,6 +8,7 @@ namespace Classroom.Models.VNPAY;
 /// <summary>
 /// OrderInfo
 /// </summary>
+/// <author>huynhdev24</author>
 public class OrderInfo
 {
     public long OrderId { get; set; }

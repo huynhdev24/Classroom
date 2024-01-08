@@ -21,6 +21,7 @@ namespace Classroom.Application.Common.VNPAY
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        /// <author>huynhdev24</author>
         public void AddRequestData(string key, string value)
         {
             if (!String.IsNullOrEmpty(value))
@@ -34,6 +35,7 @@ namespace Classroom.Application.Common.VNPAY
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
+        /// <author>huynhdev24</author>
         public void AddResponseData(string key, string value)
         {
             if (!String.IsNullOrEmpty(value))
@@ -47,6 +49,7 @@ namespace Classroom.Application.Common.VNPAY
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public string GetResponseData(string key)
         {
             string retValue;
@@ -68,6 +71,7 @@ namespace Classroom.Application.Common.VNPAY
         /// <param name="baseUrl"></param>
         /// <param name="vnp_HashSecret"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public string CreateRequestUrl(string baseUrl, string vnp_HashSecret)
         {
             StringBuilder data = new StringBuilder();
@@ -105,6 +109,7 @@ namespace Classroom.Application.Common.VNPAY
         /// <param name="inputHash"></param>
         /// <param name="secretKey"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public bool ValidateSignature(string inputHash, string secretKey)
         {
             string rspRaw = GetResponseData();
@@ -116,6 +121,7 @@ namespace Classroom.Application.Common.VNPAY
         /// 
         /// </summary>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         private string GetResponseData()
         {
 

@@ -3,6 +3,7 @@ namespace Classroom.Utilities.Constants
     /// <summary>
     /// SystemVariable
     /// </summary>
+    /// <author>huynhdev24</author>
     public static class SystemVariable
     {
         /// <summary>
@@ -10,6 +11,7 @@ namespace Classroom.Utilities.Constants
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public static string GetRanDomClassID(int length)
         {
             Random random = new Random();

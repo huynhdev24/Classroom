@@ -9,6 +9,10 @@ namespace Classroom.Models.Mappings;
 /// </summary>
 public class NotificationProfile : Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <author>huynhdev24</author>
     public NotificationProfile()
     {
         CreateMap<Notification, NotificationViewModel>();

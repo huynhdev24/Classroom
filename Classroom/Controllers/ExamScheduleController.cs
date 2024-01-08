@@ -16,6 +16,14 @@ namespace Classroom.Controllers
         private readonly IClassService _classService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="examScheduleService"></param>
+        /// <param name="studentExamService"></param>
+        /// <param name="classService"></param>
+        /// <param name="mapper"></param>
+        /// <author>huynhdev24</author>
         public ExamScheduleController(IExamScheduleService examScheduleService,
                                       IStudentExamService studentExamService,
                                       IClassService classService,
@@ -27,6 +35,14 @@ namespace Classroom.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("lich-thi")]
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -46,6 +62,15 @@ namespace Classroom.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("giao-vien/lich-thi")]
         public async Task<IActionResult> AdminLichThi(int ClassID, string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -71,6 +96,15 @@ namespace Classroom.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ExamScheduleID"></param>
+        /// <param name="keyword"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [Route("giao-vien/ket-qua-thi")]
         public async Task<IActionResult> AdminKetQuaThi(int ExamScheduleID, string keyword, int pageIndex = 1, int pageSize = 10)
         {
@@ -96,6 +130,13 @@ namespace Classroom.Controllers
             return View(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ExamScheduleID"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<IActionResult> Report(int ExamScheduleID, string keyword)
         {
             var request = new GetManageStudentExamPagingRequest()
@@ -141,6 +182,11 @@ namespace Classroom.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("them-ky-thi")]
         public IActionResult Create()
         {
@@ -151,6 +197,12 @@ namespace Classroom.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("them-ky-thi")]
         public async Task<IActionResult> Create([FromForm] ExamSchedulesCreateRequest request)
         {
@@ -169,6 +221,13 @@ namespace Classroom.Controllers
             return View(request);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ClassID"></param>
+        /// <param name="ExamScheduleID"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("gui-mail-ky-thi")]
         public async Task<IActionResult> SendMail(int ClassID, int ExamScheduleID)
         {
@@ -181,6 +240,12 @@ namespace Classroom.Controllers
             return RedirectToAction("OverView", "ExamSchedule", new { id = ExamScheduleID });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("ky-thi")]
         public async Task<IActionResult> OverView(int id)
         {
@@ -200,6 +265,12 @@ namespace Classroom.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("de-thi")]
         public async Task<IActionResult> Details(int id)
         {
@@ -212,6 +283,12 @@ namespace Classroom.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("chinh-sua-ky-thi")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -221,6 +298,12 @@ namespace Classroom.Controllers
             return View(examSchedulesViewModel);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost("chinh-sua-ky-thi")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([FromForm] ExamSchedulesUpdateRequest request)
@@ -234,6 +317,13 @@ namespace Classroom.Controllers
             return RedirectToAction("Details", "ExamSchedule", new { id = homework.ExamScheduleID });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<IActionResult> Delete(int id, string returnUrl)
         {
             if (!ModelState.IsValid)

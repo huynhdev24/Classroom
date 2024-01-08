@@ -9,6 +9,10 @@ namespace Classroom.Models.Mappings;
 /// </summary>
 public class HomeworkProfile : Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <author>huynhdev24</author>
     public HomeworkProfile()
     {
         CreateMap<Homework, HomeworkViewModel>();

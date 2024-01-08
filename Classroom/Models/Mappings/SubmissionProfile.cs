@@ -10,6 +10,10 @@ namespace Classroom.Models.Mappings
     /// </summary>
     public class SubmissionProfile : Profile
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <author>huynhdev24</author>
         public SubmissionProfile()
         {
             CreateMap<Submission, SubmissionViewModel>();

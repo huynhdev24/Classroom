@@ -9,6 +9,11 @@ public class FileValidator : IFileValidator
     private readonly int _fileSizeLimit;
     private readonly string[] _allowedExtensions;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <author>huynhdev24</author>
     public FileValidator(IConfiguration configuration)
     {
         _configuration = configuration;
@@ -21,6 +26,7 @@ public class FileValidator : IFileValidator
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public bool IsValid(IFormFile file)
     {
         if (file?.Length > 0)

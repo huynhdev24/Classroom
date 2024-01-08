@@ -15,6 +15,7 @@ public class SendMail
     /// <param name="subject"></param>
     /// <param name="body"></param>
     /// <param name="attachFile"></param>
+    /// <author>huynhdev24</author>
     public static void SendEmail(string toEmail, string subject, string body, string attachFile)
     {
         try

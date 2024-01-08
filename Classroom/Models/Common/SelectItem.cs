@@ -3,6 +3,7 @@
 /// <summary>
 /// SelectItem
 /// </summary>
+/// <author>huynhdev24</author>
 public class SelectItem
 {
     public string? Id { get; set; }

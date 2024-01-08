@@ -17,12 +17,25 @@ namespace Classroom.Controllers.Hubs
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <author>huynhdev24</author>
         public ChatHub(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="receiverName"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task SendPrivate(string receiverName, string message)
         {
             if (_ConnectionsMap.TryGetValue(receiverName, out string userId))
@@ -49,6 +62,12 @@ namespace Classroom.Controllers.Hubs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task Join(string roomName)
         {
             try
@@ -75,16 +94,33 @@ namespace Classroom.Controllers.Hubs
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task Leave(string roomName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roomName"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public IEnumerable<UserViewModel> GetUsers(string roomName)
         {
             return _Connections.Where(u => u.CurrentRoom == roomName).ToList();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public override Task OnConnectedAsync()
         {
             try
@@ -110,6 +146,12 @@ namespace Classroom.Controllers.Hubs
             return base.OnConnectedAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         public override Task OnDisconnectedAsync(Exception exception)
         {
             try
@@ -131,11 +173,21 @@ namespace Classroom.Controllers.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <value></value>
+        /// <author>huynhdev24</author>
         private string IdentityName
         {
             get { return Context.User.Identity.Name; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <author>huynhdev24</author>
         private string GetDevice()
         {
             var device = Context.GetHttpContext().Request.Headers["Device"].ToString();

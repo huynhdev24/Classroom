@@ -12,6 +12,7 @@ public class ConstantHelper
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public static string ToHexString(string str)
     {
         var sb = new StringBuilder();
@@ -30,6 +31,7 @@ public class ConstantHelper
     /// </summary>
     /// <param name="hexString"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public static string FromHexString(string hexString)
     {
         var bytes = new byte[hexString.Length / 2];

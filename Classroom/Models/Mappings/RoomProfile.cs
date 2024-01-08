@@ -9,6 +9,10 @@ namespace Classroom.Models.Mappings;
 /// </summary>
 public class RoomProfile : Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <author>huynhdev24</author>
     public RoomProfile()
     {
         CreateMap<Room, RoomViewModel>();

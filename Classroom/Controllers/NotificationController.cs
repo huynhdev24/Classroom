@@ -12,6 +12,14 @@ public class NotificationController : BaseController
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="notificationService"></param>
+    /// <param name="classService"></param>
+    /// <param name="mapper"></param>
+    /// <param name="configuration"></param>
+    /// <author>huynhdev24</author>
     public NotificationController(INotificationService notificationService,
                                   INotificationService classService,
                                   IMapper mapper,
@@ -23,6 +31,14 @@ public class NotificationController : BaseController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
     {
         var request = new GetManageNotificationPagingRequest()
@@ -40,12 +56,23 @@ public class NotificationController : BaseController
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Create([FromForm] NotificationCreateRequest request)
@@ -69,6 +96,12 @@ public class NotificationController : BaseController
         return Redirect(request.ReturnUrl);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("chinh-sua-thong-bao")]
     public async Task<IActionResult> Edit(int id)
     {
@@ -78,6 +111,12 @@ public class NotificationController : BaseController
         return View(notificationViewModel);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("chinh-sua-thong-bao")]
     [ValidateAntiForgeryToken]
     [Consumes("multipart/form-data")]
@@ -92,6 +131,13 @@ public class NotificationController : BaseController
         return RedirectToAction("Details", "Class", new { id = notification.ID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="returnUrl"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Delete(int id, string returnUrl)
     {
         if (!ModelState.IsValid)

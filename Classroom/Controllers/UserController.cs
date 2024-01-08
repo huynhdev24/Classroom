@@ -18,6 +18,13 @@ public class UserController : BaseController
     private readonly IUserService _userService;
     private readonly SignInManager<ApplicationUser> _signInManager;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userService"></param>
+    /// <param name="signInManager"></param>
+    /// <param name="unitOfWork"></param>
+    /// <author>huynhdev24</author>
     public UserController(IUserService userService
     , SignInManager<ApplicationUser> signInManager
     , IUnitOfWork unitOfWork)
@@ -26,6 +33,15 @@ public class UserController : BaseController
         _signInManager = signInManager;
         _unitOfWork = unitOfWork;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Authorize(Policy = "RequireAdmin")]
     [Route("admin/quan-ly-nguoi-dung")]
     public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
@@ -47,6 +63,13 @@ public class UserController : BaseController
         return View(data);
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="string"></typeparam>
+    /// <typeparam name="string"></typeparam>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public static Dictionary<string, string> vnp_TransactionStatus = new Dictionary<string, string>()
         {
             {"00","Giao dịch thành công" },
@@ -59,6 +82,11 @@ public class UserController : BaseController
             {"09","GD Hoàn trả bị từ chối" }
         };
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("nap-tien")]
     public IActionResult Pay()
     {
@@ -67,6 +95,12 @@ public class UserController : BaseController
         return View(request);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("nap-tien")]
     public IActionResult Pay([FromForm] RequestPayment request)
     {
@@ -113,6 +147,12 @@ public class UserController : BaseController
         return Redirect(paymentUrl);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Route("nap-tien-thanh-cong")]
     public async Task<IActionResult> VNPayReturn([FromQuery] VNPayReturn request)
     {
@@ -126,6 +166,11 @@ public class UserController : BaseController
         return View(request);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("admin/them-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public IActionResult Create()
@@ -133,6 +178,12 @@ public class UserController : BaseController
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("admin/them-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Create(RegisterRequest request)
@@ -151,6 +202,12 @@ public class UserController : BaseController
         return View(request);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("admin/chi-tiet-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Details(string id)
@@ -159,6 +216,12 @@ public class UserController : BaseController
         return View(result);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("admin/chinh-sua-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Edit(string id)
@@ -183,6 +246,12 @@ public class UserController : BaseController
         return View(vm);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("admin/chinh-sua-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> OnPostAsync(EditUserViewModel data)
@@ -244,6 +313,12 @@ public class UserController : BaseController
         return RedirectToAction("Edit", new { id = user.Id });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("admin/xoa-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Delete(string id)
@@ -265,6 +340,12 @@ public class UserController : BaseController
         return RedirectToAction("Error", "Home");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("admin/xoa-nguoi-dung")]
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Delete(UserDeleteRequest request)

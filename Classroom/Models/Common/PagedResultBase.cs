@@ -3,6 +3,7 @@
 /// <summary>
 /// PagedResultBase
 /// </summary>
+/// <author>huynhdev24</author>
 public class PagedResultBase
 {
     public int PageIndex { get; set; }

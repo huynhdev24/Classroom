@@ -9,6 +9,10 @@ namespace Classroom.Models.Mappings;
 /// </summary>
 public class UserProfile : Profile
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <author>huynhdev24</author>
     public UserProfile()
     {
         CreateMap<ApplicationUser, UserViewModel>();

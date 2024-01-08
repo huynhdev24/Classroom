@@ -17,6 +17,7 @@ namespace Classroom.Application.Common.VNPAY
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public int Compare(string x, string y)
         {
             if (x == y) return 0;

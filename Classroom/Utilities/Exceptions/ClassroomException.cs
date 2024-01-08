@@ -7,6 +7,7 @@ namespace Classroom.Utilities.Exceptions
     /// <summary>
     /// ClassroomException
     /// </summary>
+    /// <author>huynhdev24</author>
     public class ClassroomException : Exception
     {
         public ClassroomException()

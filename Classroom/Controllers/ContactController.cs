@@ -14,6 +14,14 @@ public class ContactController : Controller
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ContactService"></param>
+    /// <param name="classService"></param>
+    /// <param name="mapper"></param>
+    /// <param name="configuration"></param>
+    /// <author>huynhdev24</author>
     public ContactController(IContactService ContactService,
                                   IContactService classService,
                                   IMapper mapper,
@@ -24,6 +32,15 @@ public class ContactController : Controller
         _classService = classService;
         _mapper = mapper;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Authorize(Policy = "RequireAdmin")]
     [HttpGet("admin/danh-sach-phan-hoi")]
     public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
@@ -43,6 +60,12 @@ public class ContactController : Controller
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("phan-hoi")]
     public async Task<IActionResult> Create([FromForm] Contact request)
     {
@@ -62,6 +85,15 @@ public class ContactController : Controller
         ModelState.AddModelError("", "Thêm phản hồi thất bại, vui lòng kiểm tra lại thông tin");
         return RedirectToAction("Index", "Home");
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ContactID"></param>
+    /// <param name="Email"></param>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Authorize(Policy = "RequireAdmin")]
     [HttpPost("gui-mail")]
     public IActionResult Send(int ContactID, string Email, string message)
@@ -71,6 +103,13 @@ public class ContactController : Controller
         TempData["result"] = "Gửi email phản hồi đến người dùng thành công";
         return RedirectToAction("Details", "Contact", new { id = ContactID });
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Authorize(Policy = "RequireAdmin")]
     [HttpGet("admin/thong-tin-phan-hoi")]
     public async Task<IActionResult> Details(int id)
@@ -84,6 +123,13 @@ public class ContactController : Controller
         var result = await _ContactService.GetById(id);
         return View(result);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Authorize(Policy = "RequireAdmin")]
     public async Task<IActionResult> Delete(int id)
     {

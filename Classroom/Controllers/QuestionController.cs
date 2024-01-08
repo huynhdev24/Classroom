@@ -20,6 +20,15 @@ public class QuestionController : BaseController
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="questionService"></param>
+    /// <param name="examScheduleService"></param>
+    /// <param name="studentExamService"></param>
+    /// <param name="configuration"></param>
+    /// <param name="mapper"></param>
+    /// <author>huynhdev24</author>
     public QuestionController(IQuestionService questionService,
                               IExamScheduleService examScheduleService,
                               IStudentExamService studentExamService,
@@ -33,6 +42,14 @@ public class QuestionController : BaseController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="exId"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public async Task<JsonResult> LoadData(int page, int pageSize = 10, int exId = 0)
     {
@@ -53,6 +70,12 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public async Task<JsonResult> LoadExam(int id)
     {
@@ -64,6 +87,12 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     public async Task<JsonResult> UpdatePoint(string model)
     {
@@ -86,6 +115,12 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     public async Task<JsonResult> DeleteQuestion(int id)
     {
@@ -98,6 +133,12 @@ public class QuestionController : BaseController
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     public async Task<JsonResult> UpdateAll(string model)
     {
@@ -125,6 +166,12 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="strQuestionsCreateRequest"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<JsonResult> SaveData(string strQuestionsCreateRequest)
     {
         QuestionsCreateRequest question = JsonConvert.DeserializeObject<QuestionsCreateRequest>(strQuestionsCreateRequest);
@@ -149,6 +196,11 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [Route("quan-ly-cau-hoi")]
     public async Task<IActionResult> Index()
     {
@@ -162,6 +214,12 @@ public class QuestionController : BaseController
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("bai-thi")]
     public async Task<IActionResult> Exam(int id)
     {
@@ -173,6 +231,12 @@ public class QuestionController : BaseController
         return View(exS);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mark"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     public async Task<IActionResult> SaveResult(int mark)
     {
@@ -196,12 +260,23 @@ public class QuestionController : BaseController
         });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Create([FromForm] QuestionsCreateRequest request)
@@ -218,6 +293,13 @@ public class QuestionController : BaseController
         return View(request);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <param name="ExamScheduleId"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Import(IFormFile file, int ExamScheduleId)
     {
         if(file == null) {
@@ -260,6 +342,12 @@ public class QuestionController : BaseController
         return RedirectToAction("Index", "Question");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
@@ -272,6 +360,12 @@ public class QuestionController : BaseController
         return View(result);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -281,6 +375,12 @@ public class QuestionController : BaseController
         return View(QuestionViewModel);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Consumes("multipart/form-data")]
@@ -295,6 +395,13 @@ public class QuestionController : BaseController
         return RedirectToAction("Details", "Question", new { id = Question.QuestionID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="returnUrl"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Delete(int id, string returnUrl)
     {
         if (!ModelState.IsValid)

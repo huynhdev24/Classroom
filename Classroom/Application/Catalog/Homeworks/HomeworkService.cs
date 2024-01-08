@@ -15,6 +15,14 @@ public class HomeworkService : IHomeworkService
     private readonly IStorageService _storageService;
     private readonly UserManager<ApplicationUser> _userManager;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="storageService"></param>
+    /// <param name="userManager"></param>
+    /// <author>huynhdev24</author>
     public HomeworkService(ApplicationDbContext context,
                            IStorageService storageService,
                            UserManager<ApplicationUser> userManager)
@@ -29,6 +37,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Update(HomeworkUpdateRequest request)
     {
         var homework = await _context.Homeworks.FindAsync(request.HomeworkID);
@@ -68,6 +77,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="HomeworkID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<HomeworkViewModel> GetById(int HomeworkID)
     {
         var homework = await _context.Homeworks.FindAsync(HomeworkID);
@@ -108,6 +118,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -121,6 +132,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Create(HomeworkCreateRequest request)
     {
         var homework = new Homework()
@@ -156,6 +168,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="HomeworkID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Delete(int HomeworkID)
     {
         var homework = await _context.Homeworks.FindAsync(HomeworkID);
@@ -170,6 +183,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<HomeworkViewModel>> GetAllPaging(GetManageHomeworkPagingRequest request)
     {
         //1. Select join
@@ -220,6 +234,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<HomeworkViewModel>> GetAllMyHomeworkPaging(GetManageHomeworkPagingRequest request)
     {
         //1. Select join
@@ -277,6 +292,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<HomeworkViewModel>> GetAllMyAdminHomeworkPaging(GetManageHomeworkPagingRequest request)
     {
         //1. Select join
@@ -334,6 +350,7 @@ public class HomeworkService : IHomeworkService
     /// </summary>
     /// <param name="UserId"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<List<HomeworkViewModel>> GetAllMyAdminHomework(string? UserId)
     {
         //1. Select join
@@ -362,6 +379,7 @@ public class HomeworkService : IHomeworkService
     /// 
     /// </summary>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<List<HomeworkViewModel>> GetAll()
     {
         //1. Select join

@@ -18,6 +18,14 @@ public class CommentService : ICommentService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IStorageService _storageService;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="storageService"></param>
+    /// <param name="userManager"></param>
+    /// <author>huynhdev24</author>
     public CommentService(ApplicationDbContext context, IStorageService storageService, UserManager<ApplicationUser> userManager)
     {
         _storageService = storageService;
@@ -30,6 +38,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="CommentID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<CommentViewModel> GetById(int CommentID)
     {
         var comment = await _context.Comments.FindAsync(CommentID);
@@ -55,6 +64,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Update(CommentUpdateRequest request)
     {
         var comment = await _context.Comments.FindAsync(request.CommentID);
@@ -69,6 +79,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="file"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     private async Task<string> SaveFile(IFormFile file)
     {
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -82,6 +93,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Create(CommentCreateRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
@@ -103,6 +115,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="CommentID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Delete(int CommentID)
     {
         var comment = await _context.Comments.FindAsync(CommentID);
@@ -117,6 +130,7 @@ public class CommentService : ICommentService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<CommentViewModel>> GetAllPaging(GetManageCommentPagingRequest request)
     {
         //1. Select join

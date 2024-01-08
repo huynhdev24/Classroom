@@ -19,6 +19,12 @@ public class ContactService : IContactService
     private readonly IMapper _mapper;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    /// <author>huynhdev24</author>
     public ContactService(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
@@ -30,6 +36,7 @@ public class ContactService : IContactService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> Create(Contact request)
     {
         request.DateTimeCreated = DateTime.Now;
@@ -43,6 +50,7 @@ public class ContactService : IContactService
     /// </summary>
     /// <param name="ContactID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<bool> Delete(int ContactID)
     {
         var contact = await _context.Contacts.FindAsync(ContactID);
@@ -57,6 +65,7 @@ public class ContactService : IContactService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<Contact>> GetAllPaging(GetAllPagingRequest request)
     {
         //1. Select join
@@ -83,6 +92,7 @@ public class ContactService : IContactService
     /// </summary>
     /// <param name="ContactID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<Contact> GetById(int ContactID)
     {
         var Contact = await _context.Contacts.FindAsync(ContactID);

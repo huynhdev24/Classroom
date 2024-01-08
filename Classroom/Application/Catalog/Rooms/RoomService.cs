@@ -15,6 +15,13 @@ namespace Classroom.Application.Catalog.Rooms
         private readonly IMapper _mapper;
         private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="storageService"></param>
+        /// <param name="mapper"></param>
+        /// <author>huynhdev24</author>
         public RoomService(ApplicationDbContext context
         , IStorageService storageService
         , IMapper mapper)
@@ -30,6 +37,7 @@ namespace Classroom.Application.Catalog.Rooms
         /// <param name="UserName"></param>
         /// <param name="ClassName"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         public async Task<int> Create(string UserName, string ClassName)
         {
             var user = _context.Users.FirstOrDefault(u => u.UserName == UserName);

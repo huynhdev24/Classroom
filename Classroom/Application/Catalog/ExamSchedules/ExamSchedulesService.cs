@@ -16,6 +16,13 @@ public class ExamScheduleService : IExamScheduleService
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="userManager"></param>
+    /// <author>huynhdev24</author>
     public ExamScheduleService(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
@@ -27,6 +34,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Create(ExamSchedulesCreateRequest request)
     {
         var examSchedule = new ExamSchedule()
@@ -49,6 +57,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="ExamScheduleID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Delete(int ExamScheduleID)
     {
         var examSchedule = await _context.ExamSchedules.FindAsync(ExamScheduleID);
@@ -63,6 +72,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="UserName"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<List<ExamSchedulesViewModel>> GetAllMyExamSchedules(string UserName)
     {
         var user = await _userManager.FindByNameAsync(UserName);
@@ -97,6 +107,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<ExamSchedulesViewModel>> GetAllPaging(GetManageExamSchedulesPagingRequest request)
     {
         //1. Select join
@@ -148,6 +159,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<ExamSchedulesViewModel>> GetAllMyExamSchedulesPaging(GetManageExamSchedulesPagingRequest request)
     {
         //1. Select join
@@ -205,6 +217,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<ExamSchedulesViewModel>> GetAllMyExamAdminSchedulesPaging(GetManageExamSchedulesPagingRequest request)
     {
         //1. Select join
@@ -259,6 +272,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="UserId"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<List<ExamSchedulesViewModel>> GetAllMyExamAdminSchedules(string UserId)
     {
         //1. Select join
@@ -293,6 +307,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="ExamScheduleID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<ExamSchedulesViewModel> GetById(int ExamScheduleID)
     {
         var examSchedule = await _context.ExamSchedules.FindAsync(ExamScheduleID);
@@ -323,6 +338,7 @@ public class ExamScheduleService : IExamScheduleService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Update(ExamSchedulesUpdateRequest request)
     {
         var examSchedule = await _context.ExamSchedules.FindAsync(request.ExamScheduleID);

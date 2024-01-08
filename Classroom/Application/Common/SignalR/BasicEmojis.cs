@@ -10,6 +10,7 @@ public class BasicEmojis
     /// </summary>
     /// <param name="content"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public static string ParseEmojis(string content)
     {
         content = content.Replace(":)", Img("emoji1.png"));
@@ -28,6 +29,7 @@ public class BasicEmojis
     /// </summary>
     /// <param name="imageName"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     private static string Img(string imageName)
     {
         return ("<img class=\"emoji\" src=\"/images/emojis/" + imageName + "\">");

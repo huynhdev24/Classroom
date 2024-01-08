@@ -10,6 +10,7 @@ namespace Classroom.Models.VNPAY
     /// <summary>
     /// RequestPayment
     /// </summary>
+    /// <author>huynhdev24</author>
     public class RequestPayment
     {
         [Required(ErrorMessage = "Vui lòng nhập số tiền")]

@@ -7,6 +7,7 @@ namespace Classroom.Core.ViewModels
     /// <summary>
     /// EditUserViewModel
     /// </summary>
+    /// <author>huynhdev24</author>
     public class EditUserViewModel
     {
         public ApplicationUser User { get; set; }

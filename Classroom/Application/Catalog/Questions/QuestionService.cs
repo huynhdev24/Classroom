@@ -19,6 +19,12 @@ public class QuestionService : IQuestionService
     private readonly IMapper _mapper;
     private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="mapper"></param>
+    /// <author>huynhdev24</author>
     public QuestionService(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
@@ -30,6 +36,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Create(QuestionsCreateRequest request)
     {
         var question = _mapper.Map<QuestionsCreateRequest, Question>(request);
@@ -43,6 +50,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="QuestionID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Delete(int QuestionID)
     {
         var question = await _context.Questions.FindAsync(QuestionID);
@@ -57,6 +65,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="ExamScheduleID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<Question>> GetExamPaper(int ExamScheduleID)
     {
         var data = await _context.Questions.Where(x=> x.ExamScheduleID == ExamScheduleID).ToListAsync();
@@ -72,6 +81,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<PagedResult<QuestionViewModel>> GetAllPaging(GetManageQuestionPagingRequest request)
     {
         //1. Select join
@@ -118,6 +128,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="QuestionID"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<QuestionViewModel> GetById(int QuestionID)
     {
         var question = await _context.Questions.FindAsync(QuestionID);
@@ -132,6 +143,7 @@ public class QuestionService : IQuestionService
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<int> Update(QuestionUpdateRequest request)
     {
         var question = await _context.Questions.FindAsync(request.QuestionID);

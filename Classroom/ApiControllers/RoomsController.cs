@@ -18,6 +18,13 @@ namespace Classroom.ApiControllers
         private readonly IMapper _mapper;
         private readonly IHubContext<ChatHub> _hubContext;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <param name="hubContext"></param>
+        /// <author>huynhdev24</author>
         public RoomsController(ApplicationDbContext context,
             IMapper mapper,
             IHubContext<ChatHub> hubContext)
@@ -31,6 +38,7 @@ namespace Classroom.ApiControllers
         /// 
         /// </summary>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomViewModel>>> Get()
         {
@@ -46,6 +54,7 @@ namespace Classroom.ApiControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> Get(int id)
         {
@@ -62,6 +71,7 @@ namespace Classroom.ApiControllers
         /// </summary>
         /// <param name="roomViewModel"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPost]
         public async Task<ActionResult<Room>> Create(RoomViewModel roomViewModel)
         {
@@ -89,6 +99,7 @@ namespace Classroom.ApiControllers
         /// <param name="id"></param>
         /// <param name="roomViewModel"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(int id, RoomViewModel roomViewModel)
         {
@@ -116,6 +127,7 @@ namespace Classroom.ApiControllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        /// <author>huynhdev24</author>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

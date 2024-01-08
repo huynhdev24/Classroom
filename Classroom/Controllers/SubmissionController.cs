@@ -15,6 +15,14 @@ public class SubmissionController : BaseController
     private readonly IConfiguration _configuration;
     private readonly IMapper _mapper;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="submissionService"></param>
+    /// <param name="homeworkService"></param>
+    /// <param name="mapper"></param>
+    /// <param name="configuration"></param>
+    /// <author>huynhdev24</author>
     public SubmissionController(ISubmissionService submissionService,
                                 IHomeworkService homeworkService,
                                 IMapper mapper,
@@ -26,6 +34,15 @@ public class SubmissionController : BaseController
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="HomeworkID"></param>
+    /// <param name="keyword"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("giao-vien/danh-sach-nop-bai")]
     public async Task<IActionResult> Index(int HomeworkID, string keyword, int pageIndex = 1, int pageSize = 10)
     {
@@ -51,6 +68,13 @@ public class SubmissionController : BaseController
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="HomeworkID"></param>
+    /// <param name="keyword"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Report(int HomeworkID, string keyword)
     {
         var request = new GetManageSubmissionPagingRequest()
@@ -104,6 +128,14 @@ public class SubmissionController : BaseController
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bai_tap"></param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("danh-sach-nop-bai")]
     public async Task<IActionResult> ListSubmission(int bai_tap, int pageIndex = 1, int pageSize = 10)
     {
@@ -129,12 +161,23 @@ public class SubmissionController : BaseController
         return View(data);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Create([FromForm] SubmissionCreateRequest request)
@@ -157,6 +200,12 @@ public class SubmissionController : BaseController
         return Redirect(request.ReturnUrl);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("nop-bai")]
     public async Task<IActionResult> Edit(int id)
     {
@@ -166,6 +215,12 @@ public class SubmissionController : BaseController
         return View(submissionViewModel);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("nop-bai")]
     [ValidateAntiForgeryToken]
     [Consumes("multipart/form-data")]
@@ -180,6 +235,12 @@ public class SubmissionController : BaseController
         return RedirectToAction("Details", "Homework", new { id = submission.HomeworkID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpPost("cham-diem")]
     public async Task<IActionResult> UpdateMark([FromForm] SubmissionUpdateMarkRequest request)
     {
@@ -190,6 +251,13 @@ public class SubmissionController : BaseController
         return RedirectToAction("Details", "Submission", new { id = request.SubmissionID });
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="returnUrl"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     public async Task<IActionResult> Delete(int id, string returnUrl)
     {
         if (!ModelState.IsValid)
@@ -206,6 +274,12 @@ public class SubmissionController : BaseController
         return Redirect(returnUrl);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <author>huynhdev24</author>
     [HttpGet("chi-tiet-bai-nop")]
     public async Task<IActionResult> Details(int id)
     {
